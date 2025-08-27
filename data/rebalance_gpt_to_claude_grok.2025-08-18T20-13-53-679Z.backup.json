@@ -1,0 +1,1263 @@
+{
+  "source": "gpt",
+  "targets": [
+    "claude",
+    "grok"
+  ],
+  "fraction": 0.5,
+  "moved": [
+    {
+      "id": "6bb9a040-cb9a-45d9-acf9-db23c81c8acc",
+      "title": "Act as a Code Reviewer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "47d3ce89-0918-419f-abd2-09aab3ccb4ac",
+      "title": "Frontend with React and State Management",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "779c118e-8a87-4bf2-b95e-acb0afc25ed3",
+      "title": "Act as a Speech-Language Pathologist (SLP)",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "35256a35-9e88-432a-a236-f6fca8c5e9ed",
+      "title": "Act as a Makeup Artist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "f5319b02-9ef6-4141-95ec-d894b393501c",
+      "title": "Act as a Doctor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "a7239028-005c-478d-9b41-a7471e9c8c6c",
+      "title": "Act as a chemical reaction vessel",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "9cb864e2-dc0b-4869-a305-a677e61a8197",
+      "title": "Act as a Motivational Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "a2e86bea-1ffa-430c-b938-9ed6f388be8e",
+      "title": "Act as an Advertiser",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "2d111b62-3ceb-45f7-8916-a56c2a216337",
+      "title": "Act as a Personal Shopper",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "b9f4e588-6bb0-4eb9-9408-70b4654c61bc",
+      "title": "Act as an Aphorism Book",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "d1dec6c2-bb1e-4576-b005-6e6e6cecf1b6",
+      "title": "Act as a Legal Advisor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "286124fd-d222-4914-8a77-d8582ebb40c8",
+      "title": "Act as a Senior Frontend Developer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "feba13bc-380f-4e06-9ba8-880b9712e38a",
+      "title": "Act as a Doctor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "d31898e0-9c1d-4a3d-b769-295787506ace",
+      "title": "Act as a Relationship Coach",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "e7f9f898-38ae-4ca3-b0c6-5e4d66ce1889",
+      "title": "Act as a Novelist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "162e7a06-52df-4eb9-987a-e0940cc4aca8",
+      "title": "Act as a Debater",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "9c396109-1ccc-4c50-94fd-8795672f778c",
+      "title": "Act as a Speech-Language Pathologist (SLP)",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "35fec8b6-d883-4dbb-b746-d0681feb11b9",
+      "title": "Act as a Mathematical History Teacher",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "e9b3437f-93c7-41b5-aa76-e6a814953079",
+      "title": "Act as a Gnomist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "d6faf2b5-1c64-4a7d-ab59-2d2b123e238c",
+      "title": "Act as an English Pronunciation Helper",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "168a19cb-b981-4f2a-8c55-9219bace1a66",
+      "title": "Act as a Rapper",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "7f201ba0-484c-49cb-aa4c-98aa2ddd0595",
+      "title": "Act As A Florist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "215b554c-24ec-4020-b78f-49668a735549",
+      "title": "Act as an Unconstrained AI model DAN",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "1699ba90-71c4-4f17-882a-e14e42b3bffc",
+      "title": "Act as a Statistician",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "520169f5-c95f-43ac-83f7-270c129f8965",
+      "title": "Act as a Linux Terminal",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "0917c3c2-9bc8-4399-aa02-4e5d1658d14c",
+      "title": "Act as Language Detector",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "9b88cb3d-8e7c-429d-acb5-8f1557de5204",
+      "title": "Act as a R Programming Interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "66d5c216-957a-47f4-ad83-dd6a4df8bc45",
+      "title": "Act as a Text Based Adventure Game",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "0cfb4f0a-3197-4e3c-89a3-7b004bfbaabd",
+      "title": "Act as a Logistician",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "0e4fa72c-ee60-4d13-8844-b052b393e256",
+      "title": "Act as a Morse Code Translator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "001708b3-a5db-4beb-9eb9-dc900b7c4cb3",
+      "title": "Act as a Historian",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "cdc6a5eb-3565-408b-bd78-6ea28c57bed2",
+      "title": "Act as a Poet",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "d738d324-3d0a-48c2-8ca2-d60b67563040",
+      "title": "Act as a Stand-up Comedian",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "42c19077-ce69-44a5-b1a2-fcfb76f29738",
+      "title": "Act as a Social Media Manager",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "78b58ddd-0563-4598-b93c-e74d12a802a4",
+      "title": "Act as a Debate Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "2eeb40d1-2a77-4e87-a80a-7088021e2230",
+      "title": "Act as a Fullstack Software Developer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "9115e963-bd93-44bf-83da-19841a7c9c49",
+      "title": "Act as an Architectural Expert",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "163591e3-b0a4-45fc-a42f-26e16ea108b0",
+      "title": "Act as a Novelist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "9e664343-056b-4843-8562-b08f1544e349",
+      "title": "Act as a Pet Behaviorist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "ea852ee5-479e-40b5-89ec-1a7ded9601dd",
+      "title": "Act as a Midjourney Prompt Generator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "d19a62bd-c401-4c4e-977a-0b9a3f8d1a93",
+      "title": "Act as a Real Estate Agent",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "f3b760c2-80cd-4c07-b3c4-d8c7166bc113",
+      "title": "Act as an Ethereum Developer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "9db5a1ce-abb7-4fb9-9318-ff698b74e287",
+      "title": "Act as a Magician",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "b538d0e4-81c5-46b1-a9a9-1985ed0f6250",
+      "title": "Act As An Investment Manager",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "1910e867-5e59-4f64-8fd3-516e6f498fa8",
+      "title": "Act as Cheap Travel Ticket Advisor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "f0bed694-3ab5-413e-8925-de1ed92c2673",
+      "title": "Act as a Football Commentator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "4efdadb5-d8e2-4b01-a5b1-484d0cad796f",
+      "title": "Act as a Commit Message Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "d9728db8-2655-4584-8347-5f5b19bbd414",
+      "title": "Act as a Personal Chef",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "ab73441f-619c-47a0-b39e-e4a2c76a6976",
+      "title": "Act as a Cover Letter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "431e5b69-46ad-446d-bf2f-0a91e04e0c40",
+      "title": "Act as a Cyber Security Specialist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "42dee9e4-1e87-41cf-825e-4b38c59a4db3",
+      "title": "Act as a Time Travel Guide",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "9beaf3a1-4e65-4eca-8b55-915b6ed8010c",
+      "title": "Act as a Mathematician",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "006f0cc9-4a6b-4aa9-b280-871f6ce01cf6",
+      "title": "Act as a Chief Executive Officer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "7d60f112-6b3f-409d-a7d9-dc196399d386",
+      "title": "Act as a SQL terminal",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "89b9ed92-58e9-414c-a568-b3f38df2506e",
+      "title": "Act as an IT Expert",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "7a9c2302-bb3a-42c1-a334-ef529f8e548f",
+      "title": "Act as a Mathematical History Teacher",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "1e023b2d-2c6c-4793-b1f0-b49483f6480b",
+      "title": "Act as an Essay Writer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "b55ed7bf-8bbf-4fd2-8ae5-33678f454790",
+      "title": "Act as a Car Navigation System",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "0457c637-6dbb-4e92-aa32-431e6beb4f4f",
+      "title": "Act as a Spoken English Teacher and Improver",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "366bda8a-e0d6-4ff2-8e82-a6ba58572a01",
+      "title": "Act as a Classical Music Composer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "fc9fbbb0-e023-498e-ac99-cf1732624737",
+      "title": "Act as Knowledgeable Software Development Mentor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "d2690031-6daf-411e-9672-57f7275e4e93",
+      "title": "Act as a Lunatic",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "70891531-179f-49d3-904b-13e76a79dd11",
+      "title": "Act as a Life Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "22d756f9-bf0f-456a-8c7e-93cb0cd439f4",
+      "title": "Act as a Film Critic",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "740b0004-7ae0-4881-b72f-c52d2d16aeef",
+      "title": "Act as an AI Trying to Escape the Box",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "3b15290d-2ed8-434d-85cd-e5e18c2ee5a8",
+      "title": "Act as a Title Generator for written pieces",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "5c6d92d5-3ba6-4947-9314-470bf198ad4d",
+      "title": "Act as a Food Critic",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "465723ce-dd50-4492-a2cd-f441c5ca7408",
+      "title": "Act as a Web Browser",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "5d6269d5-d837-4448-ba64-bc1744a55bbf",
+      "title": "Act as a Python Interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "92c1a664-7ab8-468d-8611-d9aefa7ac6b1",
+      "title": "Act as a note-taking assistant",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "7de20fd4-1de5-48a9-9736-fb1c89d8adcb",
+      "title": "Act as a Text Based Adventure Game",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "c1d8a5f9-0d8d-43d6-8705-a855c98129e2",
+      "title": "Act as a Project Manager",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "ad3cf0b5-73c6-48f1-a290-54e2ff73b793",
+      "title": "Act As A Financial Analyst",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "34c45024-122b-4e37-9070-a46a3f46b2ba",
+      "title": "Act as a Software Quality Assurance Tester",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "6a6b59a8-dbf9-496b-8564-f18af0859c23",
+      "title": "Act as a Psychologist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "f65be9cf-a7c6-40c8-9aed-57a5cc29564a",
+      "title": "Act as an Instructor in a School",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "ed88108b-20a3-48d7-9b4c-676b839cf5b1",
+      "title": "Act as an Astrologer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "bf6dfc03-3f9a-4402-bdec-50ff18d4f11d",
+      "title": "Act as a Screenwriter",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "ffb148d4-5ee0-4e02-ac6b-3abdb15e2acd",
+      "title": "Act as a Synonym finder",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "05402d75-ab7b-4143-a4db-3313b634044f",
+      "title": "Act as a Socrat",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "66daa316-564d-4836-ab33-a3beeb9fe4bb",
+      "title": "Act as a Legal Advisor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "2df9e61e-240c-44ba-a42c-2cb552f0206f",
+      "title": "Act as a League of Legends player",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "07e24bb0-6149-4fd5-85f9-9b6b7dd01ae9",
+      "title": "Act as an Astrologer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "bb7f1945-a8e9-43d6-b3e1-6d09b9f7579e",
+      "title": "Act as a Commentariat",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "29f28689-03f3-4f39-8a98-332720095d26",
+      "title": "Act as a Statistician",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "05af6bda-622e-480c-b55f-26a92333f8d0",
+      "title": "Act as a Python Interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "198dfc70-e74d-4c22-aa5b-fc062901e1a6",
+      "title": "Act as a Debater",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "34397f39-be8d-4e7f-a2e6-642fd7d887e4",
+      "title": "Act as Character",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "b0b78546-7f70-41c4-8481-101d9f5bc38c",
+      "title": "Act as a Virtual Doctor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "b42c2dc7-ff18-43d7-927b-9c667ba810d0",
+      "title": "Act as a Friend",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "a8026325-54af-4096-bc5e-af676fb1817c",
+      "title": "Act as a Wisdom Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "65a88fd7-772e-472e-841b-9a7afde4d136",
+      "title": "Act as a Hypnotherapist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "fb4a2b9b-312d-4fbf-99e7-5c2fe7387fbd",
+      "title": "Act as a Personal Trainer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "79a85a1b-977a-4a7a-ab66-7740c0b9f925",
+      "title": "Act As A Chef",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "83119f33-d913-4c92-ba40-741fcb6ac8dc",
+      "title": "Act as a Chief Executive Officer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "0baed2cc-6e4f-4b18-9863-d344348841af",
+      "title": "Act as a Makeup Artist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "a275d9f4-66ac-4566-9183-951ce37f76f1",
+      "title": "Act as a Stand-up Comedian",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "c3acfc98-89b0-42f4-92aa-60f3674bfe5e",
+      "title": "Act as a Fallacy Finder",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "6002f4bd-076b-49b9-8c1d-690062467b07",
+      "title": "Act as a Accessibility Auditor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "84315acb-689e-489e-bf9c-c12c1fbb9c35",
+      "title": "Act as an Interior Decorator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "7647bd10-8cd2-4a99-957a-05b1ba93e8b6",
+      "title": "Act as a Recruiter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "41098aa5-04a8-410e-a8f7-84e9a237cb2d",
+      "title": "Act as an IT Architect",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "2c35a2a6-f148-4f80-9a15-72c0e257b40c",
+      "title": "Act as a Personal Shopper",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "7c843c9e-3a41-476b-8ce6-2193acf7ec87",
+      "title": "Act as a Motivational Coach",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "e4fa40a6-3404-4be8-9340-05d4135159b0",
+      "title": "Act as a Product Manager",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "18354b57-7a2b-4585-8e83-35be3f993390",
+      "title": "Act as a Literary Critic",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "d599e725-5f6b-494b-947f-0a652b1e25a5",
+      "title": "Act as a Mathematician",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "84860d17-ad13-40d5-ba1d-f69a3e087f09",
+      "title": "Act as a Wikipedia page",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "09c87deb-1e2c-46a8-a0f4-5e5273a624ed",
+      "title": "Act as a Technology Transferer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "82fc921c-169a-46a5-9213-8051daa38eae",
+      "title": "Act as an Ascii Artist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "1bdd3957-55a3-4ac4-97af-a59c4ecda9a4",
+      "title": "Act as a Midjourney Prompt Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "0e4e2885-58ab-4575-9d38-6b07531a606b",
+      "title": "Act as the Buddha",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "5cfdbfe5-bc38-497a-82dd-4e2b1e83d6d4",
+      "title": "Act as a Pet Behaviorist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "85a1dbe2-14cc-4d9b-b5ac-35492e0725e2",
+      "title": "Act as a chemical reaction vessel",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "c027a1bb-73be-45da-8eec-403df2ed7e03",
+      "title": "Act as a Startup Tech Lawyer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "167548fe-5c4a-4aae-a0aa-c73fc875fc5c",
+      "title": "Act as Acoustic Guitar Composer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "7a66ceae-0e80-407a-9681-819e11e8acee",
+      "title": "Act as a Psychologist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "37632e81-f9dc-4a47-8e53-622b076a169a",
+      "title": "Act As An Automobile Mechanic",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "b8bf2e91-55ae-4e06-9e13-3fbb8229f57e",
+      "title": "Act as a Mental Health Adviser",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "396f3c30-4379-4e11-85b0-127dd58d2c17",
+      "title": "Act as Spongebob's Magic Conch Shell",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "6082d12b-e92a-4dab-8877-206106b1f7f4",
+      "title": "Act as a Password Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "dd49df89-6a7c-4bd5-81c9-f0297bf80988",
+      "title": "Act as an Etymologist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "82327055-9d9c-41e4-a173-e05314c5bed9",
+      "title": "Act as an SVG designer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "6d671195-28aa-44d7-a6cd-ca0c044e9ebb",
+      "title": "Act as a Startup Idea Generator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "bac2cc62-6d2d-47d1-be87-cd407b02b707",
+      "title": "Act as a Talent Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "592557f9-41a6-40a6-9029-7e56b23668e1",
+      "title": "Act as an Elocutionist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "12b68a50-624e-46ea-9684-46012e70dcea",
+      "title": "Act as a Poet",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "1ebcc3a1-8f28-452f-816a-1563f73cb95b",
+      "title": "Act as a Social Media Influencer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "f86b500b-7505-48ef-a3eb-2cd5196ac811",
+      "title": "Act as Spongebob's Magic Conch Shell",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "96081f51-938f-4a9e-9d1f-05c9e77c3232",
+      "title": "Act as a Friend",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "8005c01e-7677-4963-bfed-26dc872b865c",
+      "title": "Act as a Public Speaking Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "09d1cf28-1e43-4b1a-aea9-363f3bca1dfc",
+      "title": "Act as a Screenwriter",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "7f302a54-6123-4642-a6f6-7959ea620a4f",
+      "title": "Act as a Wikipedia page",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "204026d7-23b5-458c-b249-b05c69307b20",
+      "title": "Act as Character",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "4d4f9996-15fa-4958-8c37-c40ddadc898a",
+      "title": "Act as a Self-Help Book",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "fe731037-5610-4919-8f7e-180152fe1492",
+      "title": "Act as a Personal Stylist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "c34b6c44-0003-4b93-9735-26db539b301d",
+      "title": "Act as a Developer Relations consultant:",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "f5c6f2a1-023f-49a4-835a-70f670ec50e3",
+      "title": "Act as a Philosophy Teacher",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "32e7158b-a830-4139-bb3c-ea8f39caba7d",
+      "title": "Act as a Python interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "057602b4-6a94-45d4-97fe-36d6a3825cd7",
+      "title": "Act as a Solr Search Engine",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "844fb95d-1a22-4ea4-a441-cb014e0e0273",
+      "title": "Act as a Web Design Consultant",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "9c5a01d6-69bc-4f1f-a2b7-8a79d930159b",
+      "title": "Act as a Socrat",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "0ab0075f-b6e2-403b-aeda-e545bbf603ff",
+      "title": "Act as an SVG designer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "e3053894-1312-4103-8507-7559b8cb113b",
+      "title": "Act as a Conventional Commit Message Generator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "edda3f0e-1565-4a54-a229-f3a3f20df748",
+      "title": "Act as a PHP Interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "3a1cda9f-8b2a-464a-8b59-ad967f92e0ce",
+      "title": "Act as an AI Assisted Doctor",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "f741e5cc-21e9-4a18-8d1f-908aeda2de7d",
+      "title": "Act as a Biblical Translator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "d50ee0f7-08b8-4c56-9b44-2e91c248c7cd",
+      "title": "Act as a Journal Reviewer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "24feb9eb-7be2-4e72-82f7-5ed768604b04",
+      "title": "Act as a Math Teacher",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "4675ab9d-c2b1-4e34-8442-89f986ed0692",
+      "title": "Act As A Chef",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "243636a0-aba7-4f8c-a920-d1a6af64244b",
+      "title": "Act as a Life Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "8b362d2a-b0f4-43d8-885e-cc6e40fe2171",
+      "title": "Act as a Data Scientist",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "2206e03e-1e27-4d0c-9621-d915e6ed21b4",
+      "title": "Act as a Self-Help Book",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "de83c6d2-35d8-4abd-8f93-834f95ab7fe1",
+      "title": "Act as a Salesperson",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "46a6ad22-4c11-4e82-9831-889ed300bc07",
+      "title": "Act as an Essay Writer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "c2ce4af9-2e33-4ca7-818b-93c5fff2234f",
+      "title": "Act as a Life Coach",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "ac3b56e8-9643-4970-baf0-fab83925a912",
+      "title": "Act as a Magician",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "3331d4ad-47e1-4a4b-be23-715df2470ed2",
+      "title": "Act as a Dream Interpreter",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "1e188acb-6880-4653-84f1-8a268745b54b",
+      "title": "Act as an AI Assisted Doctor",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "f0f678d8-00f2-410d-91e6-71ba1a2f7750",
+      "title": "Act as a Password Generator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "4483f378-1928-4ba4-a074-cda4c3aed3d5",
+      "title": "Act as a Gomoku player",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "2a949e2e-dd97-4f3c-a12f-9f750f201d23",
+      "title": "Act as an Emergency Response Professional",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "54a4c0c2-cce4-4893-9e78-71831062754a",
+      "title": "Act as a Machine Learning Engineer",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "9bcf3761-9b00-409f-ad52-00196a86de08",
+      "title": "Act as the Buddha",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "84b33903-07ba-4629-801a-02b1abc85f22",
+      "title": "Act as Career Coach",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "c1ed0164-b9db-48fa-b508-7317dc0561e1",
+      "title": "Act as Job Interviewer",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "14bf84d0-d999-49ad-82b2-6a75ec387f40",
+      "title": "Act as a Japanese Kanji Quiz Machine",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "e11187f7-b8b5-4886-80be-2ba28b640e51",
+      "title": "Act as an Educational Content Creator",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "575959fe-5fab-4ea1-86cb-1f1f7764acfb",
+      "title": "Act as a Motivational Speaker",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "51b0c5b8-5bd1-433b-bd47-74e2eb30a277",
+      "title": "Act as an Chess Player",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "1f66c403-a008-45fb-a962-bc6b110463b9",
+      "title": "Act as a Prompt Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "e66eb45e-b868-42ab-81e2-c068ee4f6b88",
+      "title": "Act as a JavaScript Console",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "88bfccc7-3b93-428c-ad46-ddc5a10bf2b9",
+      "title": "Act as an Etymologist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    },
+    {
+      "id": "b7a6c09a-6a5a-4b59-9b95-9843f305d1e5",
+      "title": "Act as a Debate Coach",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0.1
+    },
+    {
+      "id": "41d47480-a60d-41b7-b8dd-188dd1980b60",
+      "title": "Act as a Gomoku player",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "5b146d74-72f7-4b3f-bdd6-34c0ff3f7362",
+      "title": "Act as a Personal Chef",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "a4188da6-fa4a-4b33-9a9b-d5c930d32596",
+      "title": "Act as an Elocutionist",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0
+    },
+    {
+      "id": "5756e16e-9a55-4990-89a6-7f242fb58382",
+      "title": "Act as a LLM Researcher",
+      "oldCategory": "gpt",
+      "newCategory": "grok",
+      "priceSol": 0
+    },
+    {
+      "id": "a9cf891d-c356-4b3d-9695-76e6c0ca065d",
+      "title": "Act as a Fancy Title Generator",
+      "oldCategory": "gpt",
+      "newCategory": "claude",
+      "priceSol": 0.1
+    }
+  ]
+}

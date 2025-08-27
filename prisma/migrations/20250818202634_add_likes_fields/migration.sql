@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Prompt" ADD COLUMN     "likedBy" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN     "likes" INTEGER NOT NULL DEFAULT 0;

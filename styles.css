@@ -1,0 +1,576 @@
+@import url('https://unpkg.com/@solana/wallet-adapter-react-ui/styles.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+/* === Dark Black–Orange Theme Overrides === */
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #1b1b1b;
+  --text: #ffffff;
+  --muted: #b0b0b0;
+  --border: #262626;
+  /* Exact requested orange: #FFA31A (255,163,26) */
+  --primary: #FFA31A;  /* main orange for text, highlights */
+  --accent:  #FFA31A;  /* solid fill on active tabs/chips */
+  --shadow: rgba(255,163,26,0.25);
+  /* CTA palette (buttons like Connect / Create Prompt) */
+  --btn-orange-start: #FFA31A;
+  --btn-orange-end:   #FFA31A;
+  --btn-orange-border:#FFA31A;
+  --btn-orange-text:  #0a0a0a;
+}
+
+body { font-family: Inter, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text) }
+.app-root { display:flex; min-height:100vh; background: var(--bg); }
+
+/* Layout styles */
+.layout { display: flex; min-height: 100vh; background: var(--bg); }
+.sidebar { width:240px; border-right: 1px solid var(--border); padding:28px 18px; box-sizing:border-box; background: var(--surface); display: flex; flex-direction: column; }
+.main-content { flex: 1; padding: 24px; box-sizing: border-box; background: var(--bg); }
+
+/* Sidebar header */
+.sidebar-header { margin-bottom: 24px; }
+.brand-link { 
+  background: transparent !important; 
+  border: none !important; 
+  padding: 0 !important; 
+  width: 100%; 
+  display: block; 
+  cursor: pointer; 
+}
+.logo { 
+  width: 100%; 
+  max-width: 150px; 
+  height: auto; 
+  display: block; 
+  margin: 0 auto; 
+  object-fit: contain; 
+}
+
+/* Sidebar navigation */
+.sidebar-nav { flex: 1; }
+.nav-section { margin-bottom: 24px; }
+.nav-section h3 { 
+  color: var(--muted); 
+  font-size: 12px; 
+  font-weight: 600; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+  margin: 0 0 12px 0; 
+}
+.nav-section ul { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+}
+.nav-section li { 
+  margin-bottom: 4px; 
+}
+
+/* Navigation links */
+.nav-link { 
+  display: flex !important; 
+  align-items: center; 
+  gap: 10px; 
+  width: 100%; 
+  padding: 10px 12px !important; 
+  background: transparent !important; 
+  border: 1px solid transparent !important; 
+  border-radius: 8px !important; 
+  color: var(--muted) !important; 
+  text-decoration: none; 
+  transition: all 0.2s ease !important; 
+  cursor: pointer; 
+  font-size: 16px; 
+  font-weight: 700; 
+}
+.nav-link:hover { 
+  background: var(--surface-2) !important; 
+  color: var(--text) !important; 
+  border-color: var(--border) !important; 
+}
+.nav-link.active { 
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important; 
+  color: #0a0a0a !important; 
+  border-color: transparent !important; 
+  font-weight: 700; 
+  box-shadow: 0 4px 12px var(--shadow); 
+}
+
+/* Navigation icons */
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Specific size adjustments for certain logos */
+.nav-icon[src*="DeepSeek_logo_"],
+.nav-icon[src*="groklogo"] {
+  width: 26px;
+  height: 26px;
+}
+.nav-icon img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  display: block;
+  background: transparent;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Sidebar footer */
+.sidebar-footer { 
+  margin-top: auto; 
+  padding-top: 20px; 
+}
+.wallet-info { 
+  margin-top: 8px; 
+  padding: 8px; 
+  background: var(--surface-2); 
+  border-radius: 6px; 
+  text-align: center; 
+}
+.wallet-address { 
+  font-size: 12px; 
+  color: var(--muted); 
+  font-family: monospace; 
+}
+.brand { display: flex; justify-content: center; }
+.main { flex:1; padding:24px; box-sizing:border-box; background: var(--bg); }
+.brand h1 { margin:0 0 18px 0; font-size:20px; letter-spacing:0.4px }
+.brand .brand-logo {
+  width: auto;               /* не растягиваем на всю ширину */
+  max-width: 150px;          /* чуть больше логотип */
+  height: auto;
+  display: block;
+  cursor: pointer;
+  margin: 0 auto 10px auto;  /* меньше отступ снизу */
+  border: 0;
+  box-shadow: none;
+  background: var(--surface); /* match sidebar background */
+  border-radius: 0; /* remove rounded outline */
+  object-fit: contain;
+  mix-blend-mode: lighten; /* чёрный фон в PNG визуально сольётся с цветом сайдбара */
+}
+.header-row { display:flex; align-items:flex-start; justify-content:space-between; gap: 16px; margin-bottom: 12px; }
+.header-row .header h1 { line-height: 1; }
+.header-row .header p { margin-top: 4px; }
+
+/* Кнопка кошелька в хедере */
+.header-wallet {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-wallet .wallet-adapter-button {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 4px 20px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  height: auto !important;
+  min-height: 26px !important;
+}
+
+.header-wallet .wallet-adapter-button:hover {
+  background: var(--surface-2) !important;
+  border-color: var(--primary) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Мобильная адаптация кнопки кошелька в хедере */
+@media (max-width: 800px) {
+  .header-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .header-wallet {
+    align-self: flex-end;
+  }
+  
+  .header-wallet .wallet-adapter-button {
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    min-height: 40px !important;
+  }
+}
+
+/* Social links styles */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: var(--surface-2);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.social-link:hover .social-icon {
+  opacity: 1;
+}
+
+/* Force X logo to be white */
+.social-link img[src*="x-logo"] {
+  filter: brightness(0) invert(1);
+}
+.sections { margin-top:6px }
+.section-group { margin-bottom:16px }
+.tab { padding:8px 12px; cursor:pointer; border-radius:8px; margin-bottom:8px; display:flex; align-items:center; gap:6px; transition:all 160ms cubic-bezier(.2,.8,.2,1); background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); }
+.tab:hover { transform: translateX(6px); border-color: var(--primary); box-shadow: none; background: var(--surface-2); }
+.tab .icon { width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-size:14px }
+.tab.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #0a0a0a; font-weight: 700; box-shadow: 0 8px 24px var(--shadow); }
+.sidebar-footer { margin-top:20px }
+
+/* Model icon in tabs (e.g., ChatGPT) */
+.tab .model-icon {
+  width: 1.6em;
+  height: 1.6em;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: -1px;
+  margin-right: 0;
+  filter: none;
+}
+.tab .model-icon.gpt { width: 1.4em; height: 1.4em; }
+.tab .model-icon.copilot { width: 1.4em; height: 1.4em; margin-right: 2px; }
+.tab .model-icon.claude { width: 1.45em; height: 1.45em; }
+.tab .model-icon.grok { margin-right: -2px; }
+.tab .model-icon.cursor { margin-left: -2px; }
+.tab.active .model-icon { filter: brightness(0) saturate(100%); }
+/* Nudge Grok tab closer to the left edge only */
+.tab.grok { padding-left: 10px; }
+/* Keep Claude and Cursor icons unchanged on active state */
+.tab.active .model-icon.claude,
+.tab.active .model-icon.cursor { filter: none; }
+
+.container { max-width:900px; margin:0 auto }
+.new-prompt { margin-top: 16px }
+.new-prompt input, .new-prompt textarea { width:100%; margin:6px 0; padding:8px; border:1px solid #ddd; border-radius:6px }
+.list ul { list-style:none; padding:0 }
+.list li { padding:8px 0; border-bottom:1px solid #eee }
+.meta { color:var(--muted); font-size:0.9em }
+
+.status.pending { color: var(--muted); margin-top:8px }
+.status.success { color: green; margin-top:8px }
+.status.error { color: red; margin-top:8px }
+
+/* Prompt cards in list */
+.prompt-card { padding:18px; border-radius:14px; background: var(--surface); border: 1px solid var(--border); transition: box-shadow 200ms ease, transform 200ms ease, border-color 200ms ease; position: relative; overflow: hidden; display: block; text-decoration: none; }
+.prompt-card:hover { transform: translateY(-4px); box-shadow: none; border-color: var(--primary); }
+.prompt-card::before { display: none; content: none; }
+.prompt-card .title, .prompt-title { font-weight: 700; color: var(--text); }
+.prompt-card .preview { margin-top: 10px; color: var(--muted); max-height: 56px; overflow: hidden; }
+.prompt-content { margin-top: 10px; color: var(--primary); max-height: 56px; overflow: hidden; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13.5px; line-height: 1.5; }
+.prompt-card .badge { display: inline-block; padding: 4px 8px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #0a0a0a; font-size: 12px; margin-left: 8px; font-weight: 700; }
+
+/* Small model icon before titles */
+.model-mini {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+/* Specific size adjustments for certain model logos in cards */
+.model-mini[src*="DeepSeek_logo_"] {
+  width: 24px;
+  height: 24px;
+}
+
+/* Make GPT and Claude logos slightly smaller in cards */
+.model-mini[src*="chatlogo"],
+.model-mini[src*="claudelogo"] {
+  width: 18px;
+  height: 18px;
+}
+
+/* Grok logo specific size in cards */
+.model-mini[src*="groklogo"] {
+  width: 20px;
+  height: 20px;
+}
+
+/* Topbar wallet placement */
+.topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px }
+.topbar-right { display:flex; gap:8px; align-items:center }
+.topbar-left { display:flex; align-items:center }
+
+/* Social icons */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.social-icon-button {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px !important;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon-button:hover {
+  background: var(--surface) !important;
+  transform: translateY(-1px);
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.social-icon.svg-icon {
+  filter: invert(1);
+}
+
+.social-icon-button:hover .social-icon {
+  opacity: 1;
+}
+
+@media (max-width: 800px) {
+	.sidebar { display:none }
+	.app-root { flex-direction:column }
+}
+
+/* Modal styles for create prompt */
+.modal-overlay { position:fixed; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1000 }
+.modal { background: var(--surface); color: var(--text); padding:18px; border-radius:10px; width:880px; max-width:96%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid var(--border); overflow-y:auto; overflow-x:hidden; }
+.modal input, .modal textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px; box-sizing: border-box; }
+.modal textarea { min-height:120px }
+.modal .meta { color: var(--muted); }
+
+/* Buttons */
+button { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; transition: all .2s ease; }
+button:hover { border-color: var(--primary); box-shadow: none; }
+button:disabled { opacity: .6; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
+
+/* Shared primary CTA button style */
+.btn-primary { background: #141414; color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-weight: 600; box-shadow: none; transition: border-color .2s ease; }
+.btn-primary:hover { border-color: var(--primary); box-shadow: none; }
+
+/* Wallet button (override lib styles) */
+.wallet-adapter-button { background: #141414 !important; color: var(--text) !important; border: 1px solid var(--border) !important; border-radius: 10px !important; font-weight: 700 !important; box-shadow: none !important; transition: border-color .2s ease !important; }
+.wallet-adapter-button:hover { border-color: var(--primary) !important; box-shadow: none !important; }
+
+/* Blur locked content */
+.blurred { filter: blur(6px); user-select: none; pointer-events: none; }
+
+/* Filters dropdown + chips */
+.filters-dropdown { position: relative; display: inline-block; }
+.filters-dropdown > button { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 10px 14px; }
+.filters-dropdown > button:hover { border-color: var(--primary); box-shadow: none; }
+.filters-content { position: absolute; top: 100%; left: 0; background: var(--surface); border: 1px solid var(--primary); border-radius: 12px; padding: 16px; margin-top: 8px; min-width: 320px; box-shadow: 0 12px 36px var(--shadow); z-index: 10; }
+.filter-section { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.filter-section:last-child { border-bottom: none; margin-bottom: 0; }
+.filter-section h4 { margin: 0 0 8px 0; color: var(--accent); font-size: 13px; letter-spacing: .5px; text-transform: uppercase; }
+.filter-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-chip { padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); color: var(--muted); cursor: pointer; transition: all .2s ease; font-weight: 600; }
+.filter-chip:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: none; }
+.filter-chip.active { background: linear-gradient(135deg, var(--primary), var(--accent)); color: #0a0a0a; border-color: transparent; box-shadow: 0 8px 24px var(--shadow); }
+.price-filters { display: flex; flex-direction: column; gap: 10px; }
+.checkbox-item { display: flex; align-items: center; gap: 10px; background: var(--surface-2); border: 1px solid var(--border); padding: 8px 10px; border-radius: 10px; }
+.checkbox-item:hover { border-color: var(--primary); }
+.checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
+
+/* Fix link default color and underline inside dark theme */
+.prompt-card, .prompt-card * { color: var(--text); text-decoration: none; }
+.prompt-title, .prompt-author, .prompt-price { color: var(--text); }
+
+/* Form layout (create prompt modal) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.form-group label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+  box-sizing: border-box;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(255, 163, 26, 0.15);
+}
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Prevent long strings from overflowing the modal */
+.modal pre { white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; max-width: 100%; }
+.modal textarea,
+.modal input,
+.modal label,
+.modal p { word-break: break-word; overflow-wrap: anywhere; }
+
+/* Small Solana icon next to label */
+label .sol-badge {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  margin-left: 6px;
+  opacity: .9;
+  vertical-align: -2px;
+}
+
+/* On wider screens, keep symmetric side gutters */
+@media (min-width: 1024px) {
+  .modal { margin: 0 12px; }
+}
+
+/* Remove top stripe; add subtle orange border highlight on hover */
+.prompt-card::before { display: none; content: none; }
+.prompt-card { transition: border-color .2s ease, box-shadow .2s ease; }
+.prompt-card:hover { transform: none; border-color: var(--primary); box-shadow: none; }
+
+/* Increase spacing between cards in the grid */
+.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+
+/* Dark gray search input (not white) and larger size */
+.search {
+  background: var(--surface-2);
+  color: var(--text);
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+}
+.search::placeholder { color: #8a8a8a; }
+/* Keep search from changing to orange on focus/active */
+.search:focus,
+.search:focus-visible,
+.search:active {
+  outline: none !important;
+  border-color: var(--border) !important;
+  box-shadow: none !important;
+}
+
+/* Ensure buttons and tabs text are white, not blue */
+button, .tab, .filters-dropdown > button { color: var(--text); }
+
+/* Keep prompt preview orange even inside prompt-card global color rule */
+.prompt-card .prompt-content { color: var(--primary); }
+
+/* Layout spacing tweaks */
+.controls { margin-bottom: 28px; }
+.filters-dropdown { margin-top: 12px; margin-bottom: 16px; }
+
+/* Price styling: slightly lower offset and Solana icon */
+.prompt-price {
+  margin-top: 8px; /* nudge price a bit lower in the card */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.prompt-card .prompt-price {
+  margin-top: 12px; /* even lower on cards */
+}
+.prompt-price .amount { line-height: 1; }
+.sol-inline {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  vertical-align: -2px;
+}
+
+/* Coder-style Free label */
+.free-label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: #22c55e; /* green */
+  font-weight: 700;
+}
+
+/* Responsive tweaks */
+@media (max-width: 800px) {
+  .controls { flex-direction: column; align-items: stretch; }
+  .search { width: 100%; height: 42px; font-size: 15px; }
+  .filters-content { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 420px; }
+}
+
+/* Page-level actions row (under wallet button, right-aligned) */
+.page-actions { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.page-actions .btn-primary { background: #141414; color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; font-weight: 600; box-shadow: none; transition: border-color .2s ease; }
+.page-actions .btn-primary:hover { border-color: var(--primary); box-shadow: none; }
+
+/* Sidebar Create Prompt button: full width, taller than tabs, centered label */
+.sidebar-footer .btn-primary {
+  display: flex;
+  width: 100%;
+  height: 52px; /* taller than tab rows */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 14px; /* keep fixed height */
+  font-size: 16px;
+  font-weight: 700;
+}
