@@ -6,69 +6,96 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const { id, category, filters, price } = req.query
       const viewer = (req.headers['x-viewer'] || '').toString()
-      if (id) {
-  // Fetch a single prompt by id
-  const rows = await prisma.$queryRaw`SELECT id, title, content, "priceSol", owner, category, buyers, filters, "createdAt" FROM "Prompt" WHERE id = ${id}`
-  const p = Array.isArray(rows) ? rows[0] : null
-  if (!p) return res.status(404).json({ error: 'Not found' })
-  // Redact paid content unless viewer is owner or buyer
-  let result = p
-  try {
-    const isOwner = viewer && viewer === p.owner
-    const isBuyer = viewer && Array.isArray(p.buyers) && p.buyers.includes(viewer)
-    const hasAccess = p.priceSol <= 0 || isOwner || isBuyer
-    
-    if (hasAccess) {
-      result = { ...p, locked: false }
-    } else {
-      result = { ...p, content: '', locked: true }
-    }
-  } catch {
-    result = { ...p, content: '', locked: true }
-  }
-  return res.status(200).json(result)
-    }
-    const q = {}
-    if (category) q.category = category
-    
-    // filters is a comma-separated list from query
-    if (filters) {
-      const f = Array.isArray(filters) ? filters : String(filters).split(',').map(s => s.trim()).filter(Boolean)
-      if (f.length) q.filters = { hasSome: f }
-    }
-    
-    // Handle price filtering
-    if (price) {
-      const priceFilters = Array.isArray(price) ? price : String(price).split(',').map(s => s.trim()).filter(Boolean)
-      if (priceFilters.includes('free') && priceFilters.includes('paid')) {
-        // Both free and paid selected - no price filter needed
-      } else if (priceFilters.includes('free')) {
-        q.priceSol = { equals: 0 }
-      } else if (priceFilters.includes('paid')) {
-        q.priceSol = { gt: 0 }
-      }
-    }
-    
-    const where = Object.keys(q).length ? { where: q } : {}
-    const prompts = await prisma.prompt.findMany({ ...(where), orderBy: { createdAt: 'desc' } })
-  // Redact paid content for unauthorized viewers
-  const safe = (prompts || []).map(p => {
-    try {
-      const isOwner = viewer && viewer === p.owner
-      const isBuyer = viewer && Array.isArray(p.buyers) && p.buyers.includes(viewer)
-      const hasAccess = p.priceSol <= 0 || isOwner || isBuyer
       
-      if (hasAccess) {
-        return { ...p, locked: false }
-      } else {
-        return { ...p, content: '', locked: true }
+      if (id) {
+        // Оптимизированный запрос одного промпта
+        const prompt = await prisma.prompt.findUnique({
+          where: { id: id },
+          select: {
+            id: true,
+            title: true,
+            content: true,
+            priceSol: true,
+            owner: true,
+            category: true,
+            buyers: true,
+            filters: true,
+            createdAt: true
+          }
+        })
+        
+        if (!prompt) return res.status(404).json({ error: 'Not found' })
+        
+        // Проверка доступа
+        const isOwner = viewer && viewer === prompt.owner
+        const isBuyer = viewer && Array.isArray(prompt.buyers) && prompt.buyers.includes(viewer)
+        const hasAccess = prompt.priceSol <= 0 || isOwner || isBuyer
+        
+        const result = hasAccess 
+          ? { ...prompt, locked: false }
+          : { ...prompt, content: '', locked: true }
+          
+        return res.status(200).json(result)
       }
-    } catch {
-      return { ...p, content: '', locked: true }
+
+      // Построение where clause для списка промптов
+      const whereClause = {}
+      
+      if (category && category !== 'all') {
+        whereClause.category = category
+      }
+      
+      if (filters) {
+        const filterArray = Array.isArray(filters) 
+          ? filters 
+          : String(filters).split(',').map(s => s.trim()).filter(Boolean)
+        if (filterArray.length) {
+          whereClause.filters = { hasSome: filterArray }
+        }
+      }
+      
+      if (price) {
+        const priceFilters = Array.isArray(price) 
+          ? price 
+          : String(price).split(',').map(s => s.trim()).filter(Boolean)
+        if (priceFilters.includes('free') && !priceFilters.includes('paid')) {
+          whereClause.priceSol = { equals: 0 }
+        } else if (priceFilters.includes('paid') && !priceFilters.includes('free')) {
+          whereClause.priceSol = { gt: 0 }
+        }
+      }
+
+      // Оптимизированный запрос с пагинацией
+      const prompts = await prisma.prompt.findMany({
+        where: whereClause,
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          priceSol: true,
+          owner: true,
+          category: true,
+          buyers: true,
+          filters: true,
+          createdAt: true
+        },
+        orderBy: { createdAt: 'desc' },
+        take: 100 // Ограничиваем количество для быстрой загрузки
+      })
+
+      // Быстрая обработка доступа
+      const safePrompts = prompts.map(prompt => {
+        const isOwner = viewer && viewer === prompt.owner
+        const isBuyer = viewer && Array.isArray(prompt.buyers) && prompt.buyers.includes(viewer)
+        const hasAccess = prompt.priceSol <= 0 || isOwner || isBuyer
+        
+        return hasAccess 
+          ? { ...prompt, locked: false }
+          : { ...prompt, content: '', locked: true }
+      })
+
+      return res.status(200).json(safePrompts)
     }
-  })
-  return res.status(200).json(safe)
-  }
 
   if (req.method === 'POST') {
   const { title, content, priceSol, category, filters } = req.body
