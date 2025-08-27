@@ -2,9 +2,6 @@ import prisma from '../../../lib/prisma'
 import { sanitizePromptFields } from '../../../utils/sanitize'
 
 export default async function handler(req, res) {
-  // Устанавливаем кеш заголовки для CDN
-  res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
-  
   try {
     if (req.method === 'GET') {
       const { id, category, filters, price, search } = req.query
@@ -75,7 +72,7 @@ export default async function handler(req, res) {
         }
       }
 
-      // Оптимизированный запрос с увеличенным лимитом
+      // Запрос без лимита
       const prompts = await prisma.prompt.findMany({
         where: whereClause,
         select: {
@@ -89,8 +86,7 @@ export default async function handler(req, res) {
           filters: true,
           createdAt: true
         },
-        orderBy: { createdAt: 'desc' },
-        take: 200 // Увеличили лимит для лучшего UX
+        orderBy: { createdAt: 'desc' }
       })
 
       // Быстрая обработка доступа
