@@ -30,33 +30,6 @@ export default function Welcome() {
 
   return (
     <div style={{display:'flex', alignItems:'center', justifyContent:'center', minHeight:'100vh'}}>
-      {/* Social icons at top */}
-      <div style={{position:'absolute', top:20, left:20, display:'flex', gap:12}}>
-        <button 
-          onClick={() => {/* TODO: Add X link */}}
-          style={{
-            background:'transparent', border:'none', padding:8, borderRadius:8,
-            cursor:'pointer', transition:'all 0.2s ease', display:'flex',
-            alignItems:'center', justifyContent:'center'
-          }}
-          onMouseEnter={(e) => e.target.style.background = 'var(--surface)'}
-          onMouseLeave={(e) => e.target.style.background = 'transparent'}
-        >
-          <img src="/icons/x-logo.svg" alt="X (Twitter)" style={{width:24, height:24, filter:'invert(1)', opacity:0.8}} />
-        </button>
-        <button 
-          onClick={() => {/* TODO: Add DexScreener link */}}
-          style={{
-            background:'transparent', border:'none', padding:8, borderRadius:8,
-            cursor:'pointer', transition:'all 0.2s ease', display:'flex',
-            alignItems:'center', justifyContent:'center'
-          }}
-          onMouseEnter={(e) => e.target.style.background = 'var(--surface)'}
-          onMouseLeave={(e) => e.target.style.background = 'transparent'}
-        >
-          <img src="/icons/dexscreenerlogo.jpg" alt="DexScreener" style={{width:24, height:24, opacity:0.8}} />
-        </button>
-      </div>
       
       <div style={{
         maxWidth: 720,
