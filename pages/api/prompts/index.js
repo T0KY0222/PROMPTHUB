@@ -2,10 +2,11 @@ import prisma from '../../../lib/prisma'
 import { sanitizePromptFields } from '../../../utils/sanitize'
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    const { id, category, filters, price } = req.query
-    const viewer = (req.headers['x-viewer'] || '').toString()
-    if (id) {
+  try {
+    if (req.method === 'GET') {
+      const { id, category, filters, price } = req.query
+      const viewer = (req.headers['x-viewer'] || '').toString()
+      if (id) {
   // Fetch a single prompt by id
   const rows = await prisma.$queryRaw`SELECT id, title, content, "priceSol", owner, category, buyers, filters, "createdAt" FROM "Prompt" WHERE id = ${id}`
   const p = Array.isArray(rows) ? rows[0] : null
@@ -82,4 +83,11 @@ export default async function handler(req, res) {
 
   res.setHeader('Allow', ['GET','POST'])
   res.status(405).end('Method not allowed')
+  } catch (error) {
+    console.error('API Error:', error);
+    res.status(500).json({ 
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
+    });
+  }
 }
