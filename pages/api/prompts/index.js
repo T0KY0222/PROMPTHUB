@@ -2,20 +2,7 @@ import prisma from '../../../lib/prisma'
 import { sanitizePromptFields } from '../../../utils/sanitize'
 
 export default async function handler(req, res) {
-  console.log('API Request:', {
-    method: req.method,
-    query: req.query,
-    headers: {
-      'x-viewer': req.headers['x-viewer'],
-      'x-owner': req.headers['x-owner']
-    }
-  });
-
   try {
-    // Test database connection first
-    await prisma.$connect();
-    console.log('Database connected successfully');
-
     if (req.method === 'GET') {
       const { id, category, filters, price } = req.query
       const viewer = (req.headers['x-viewer'] || '').toString()
@@ -63,10 +50,7 @@ export default async function handler(req, res) {
     }
     
     const where = Object.keys(q).length ? { where: q } : {}
-    console.log('Database query:', where);
-    
     const prompts = await prisma.prompt.findMany({ ...(where), orderBy: { createdAt: 'desc' } })
-    console.log('Prompts found:', prompts?.length || 0);
   // Redact paid content for unauthorized viewers
   const safe = (prompts || []).map(p => {
     try {
@@ -101,16 +85,9 @@ export default async function handler(req, res) {
   res.status(405).end('Method not allowed')
   } catch (error) {
     console.error('API Error:', error);
-    console.error('Error stack:', error.stack);
     res.status(500).json({ 
       error: 'Internal server error',
       details: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
     });
-  } finally {
-    try {
-      await prisma.$disconnect();
-    } catch (disconnectError) {
-      console.error('Disconnect error:', disconnectError);
-    }
   }
 }
