@@ -2,9 +2,12 @@ import prisma from '../../../lib/prisma'
 import { sanitizePromptFields } from '../../../utils/sanitize'
 
 export default async function handler(req, res) {
+  // Устанавливаем кеш заголовки для CDN
+  res.setHeader('Cache-Control', 's-maxage=30, stale-while-revalidate=60');
+  
   try {
     if (req.method === 'GET') {
-      const { id, category, filters, price } = req.query
+      const { id, category, filters, price, search } = req.query
       const viewer = (req.headers['x-viewer'] || '').toString()
       
       if (id) {
@@ -38,11 +41,18 @@ export default async function handler(req, res) {
         return res.status(200).json(result)
       }
 
-      // Построение where clause для списка промптов
+      // Построение оптимизированного where clause
       const whereClause = {}
       
       if (category && category !== 'all') {
         whereClause.category = category
+      }
+      
+      if (search) {
+        whereClause.OR = [
+          { title: { contains: search, mode: 'insensitive' } },
+          { content: { contains: search, mode: 'insensitive' } }
+        ];
       }
       
       if (filters) {
@@ -65,7 +75,7 @@ export default async function handler(req, res) {
         }
       }
 
-      // Оптимизированный запрос с пагинацией
+      // Оптимизированный запрос с увеличенным лимитом
       const prompts = await prisma.prompt.findMany({
         where: whereClause,
         select: {
@@ -80,11 +90,11 @@ export default async function handler(req, res) {
           createdAt: true
         },
         orderBy: { createdAt: 'desc' },
-        take: 100 // Ограничиваем количество для быстрой загрузки
+        take: 200 // Увеличили лимит для лучшего UX
       })
 
       // Быстрая обработка доступа
-      const safePrompts = prompts.map(prompt => {
+      const processedPrompts = prompts.map(prompt => {
         const isOwner = viewer && viewer === prompt.owner
         const isBuyer = viewer && Array.isArray(prompt.buyers) && prompt.buyers.includes(viewer)
         const hasAccess = prompt.priceSol <= 0 || isOwner || isBuyer
@@ -94,7 +104,7 @@ export default async function handler(req, res) {
           : { ...prompt, content: '', locked: true }
       })
 
-      return res.status(200).json(safePrompts)
+      return res.status(200).json(processedPrompts)
     }
 
   if (req.method === 'POST') {

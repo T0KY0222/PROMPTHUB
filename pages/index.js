@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
@@ -8,6 +8,23 @@ const WalletMultiButton = dynamic(
   () => import('@solana/wallet-adapter-react-ui').then((mod) => mod.WalletMultiButton),
   { ssr: false }
 )
+
+// Кеширование для API запросов
+const CACHE_TIME = 60000; // 1 минута
+const promiseCache = new Map();
+
+// Дебаунс функция
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 
 export default function Home() {
@@ -81,6 +98,7 @@ export default function Home() {
   const category = router.query.category || ''
   const [filtersSelected, setFiltersSelected] = useState([])
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
   const [freeOnly, setFreeOnly] = useState(false)
   const [paidOnly, setPaidOnly] = useState(false)
@@ -243,7 +261,42 @@ export default function Home() {
     return isPurchasedByViewer(prompt)
   }
 
+  // Загрузка промптов с оптимизацией
   useEffect(() => {
+    fetchPrompts();
+  }, [fetchPrompts]);
+
+  // Дебаунсированная загрузка при изменении фильтров
+  useEffect(() => {
+    debouncedFetch();
+  }, [category, filtersSelected, freeOnly, paidOnly]);
+
+  // Кешированная загрузка промптов
+  const cachedFetch = useCallback(async (url) => {
+    const now = Date.now();
+    if (promiseCache.has(url)) {
+      const { data, timestamp } = promiseCache.get(url);
+      if (now - timestamp < CACHE_TIME) {
+        return data;
+      }
+    }
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      promiseCache.set(url, { data, timestamp: now });
+      return data;
+    } catch (error) {
+      console.error('Fetch error:', error);
+      return [];
+    }
+  }, []);
+
+  // Оптимизированная загрузка промптов
+  const fetchPrompts = useCallback(async () => {
+    setLoading(true);
+    
     const params = []
     if (category) params.push(`category=${category}`)
     if (filtersSelected.length) params.push(`filters=${filtersSelected.join(',')}`)
@@ -254,28 +307,50 @@ export default function Home() {
     if (priceParams.length) params.push(`price=${priceParams.join(',')}`)
     
     const queryString = params.length ? `?${params.join('&')}` : ''
+    const url = `/api/prompts${queryString}`;
+    const headers = publicKey ? { 'x-viewer': publicKey.toBase58() } : {};
     
-    fetch(`/api/prompts${queryString}`, { headers: { 'x-viewer': publicKey ? publicKey.toBase58() : '' }}).then(r => r.json()).then(list => {
-      const base = Array.isArray(list) ? list : []
-      // Shuffle prompts when no category is selected (main page)
-      const finalPrompts = !category ? shuffle(base) : base
-      setPrompts(finalPrompts)
-    })
-  }, [category, filtersSelected, freeOnly, paidOnly, publicKey])
+    try {
+      const response = await fetch(url, { headers });
+      if (response.ok) {
+        const list = await response.json();
+        const base = Array.isArray(list) ? list : []
+        // Shuffle prompts when no category is selected (main page)
+        const finalPrompts = !category ? shuffle(base) : base
+        setPrompts(finalPrompts)
+      } else {
+        console.error('Failed to fetch prompts');
+        setPrompts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching prompts:', error);
+      setPrompts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [category, filtersSelected, freeOnly, paidOnly, publicKey]);
 
-  // Client-side filtering by search term
-  const filteredPrompts = prompts.filter(prompt => {
-    if (!search.trim()) return true
+  // Дебаунсированный поиск
+  const debouncedFetch = useMemo(
+    () => debounce(fetchPrompts, 300),
+    [fetchPrompts]
+  );
+
+  // Мемоизированная фильтрация по поиску
+  const filteredPrompts = useMemo(() => {
+    if (!search.trim()) return prompts
     const searchLower = search.toLowerCase()
-    return (
-      prompt.title?.toLowerCase().includes(searchLower) ||
-      prompt.content?.toLowerCase().includes(searchLower) ||
-      prompt.author?.toLowerCase().includes(searchLower) ||
-      (Array.isArray(prompt.filters) && prompt.filters.some(filter => 
-        filter.toLowerCase().includes(searchLower)
-      ))
-    )
-  })
+    return prompts.filter(prompt => {
+      return (
+        prompt.title?.toLowerCase().includes(searchLower) ||
+        prompt.content?.toLowerCase().includes(searchLower) ||
+        prompt.author?.toLowerCase().includes(searchLower) ||
+        (Array.isArray(prompt.filters) && prompt.filters.some(filter => 
+          filter.toLowerCase().includes(searchLower)
+        ))
+      )
+    });
+  }, [prompts, search]);
 
   async function createPrompt(e) {
     e.preventDefault()
@@ -654,8 +729,37 @@ export default function Home() {
           </div>
         )}
         
+        {/* Loading indicator */}
+        {loading && (
+          <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+            <div style={{
+              display: 'inline-block',
+              width: '32px',
+              height: '32px',
+              border: '3px solid #f3f3f3',
+              borderTop: '3px solid #3498db',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <p style={{ marginTop: '16px', color: 'var(--text-muted)' }}>Loading prompts...</p>
+            <style jsx>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {/* Results counter */}
+        {!loading && filteredPrompts.length > 0 && (
+          <div style={{ textAlign: 'center', marginBottom: '20px', color: 'var(--text-muted)' }}>
+            Found {filteredPrompts.length} prompts
+          </div>
+        )}
+        
         {/* Main grid or My sections */}
-        {!showMy && (
+        {!showMy && !loading && (
           <div className="prompt-grid">
             {filteredPrompts.map(p => {
             const viewer = publicKey ? publicKey.toBase58() : ''
