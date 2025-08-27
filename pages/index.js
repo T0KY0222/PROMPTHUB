@@ -9,12 +9,12 @@ const WalletMultiButton = dynamic(
   { ssr: false }
 )
 
-// Кеширование для API запросов
+// Кеширование для API запросов - вынесено за пределы компонента
 const CACHE_TIME = 60000; // 1 минута
 const promiseCache = new Map();
 
-// Дебаунс функция
-const debounce = (func, wait) => {
+// Дебаунс функция - вынесена за пределы компонента
+function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
     const later = () => {
@@ -24,8 +24,7 @@ const debounce = (func, wait) => {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-};
-
+}
 
 export default function Home() {
   const router = useRouter()
@@ -261,38 +260,6 @@ export default function Home() {
     return isPurchasedByViewer(prompt)
   }
 
-  // Загрузка промптов с оптимизацией
-  useEffect(() => {
-    fetchPrompts();
-  }, [fetchPrompts]);
-
-  // Дебаунсированная загрузка при изменении фильтров
-  useEffect(() => {
-    debouncedFetch();
-  }, [category, filtersSelected, freeOnly, paidOnly]);
-
-  // Кешированная загрузка промптов
-  const cachedFetch = useCallback(async (url) => {
-    const now = Date.now();
-    if (promiseCache.has(url)) {
-      const { data, timestamp } = promiseCache.get(url);
-      if (now - timestamp < CACHE_TIME) {
-        return data;
-      }
-    }
-    
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      promiseCache.set(url, { data, timestamp: now });
-      return data;
-    } catch (error) {
-      console.error('Fetch error:', error);
-      return [];
-    }
-  }, []);
-
   // Оптимизированная загрузка промптов
   const fetchPrompts = useCallback(async () => {
     setLoading(true);
@@ -330,11 +297,21 @@ export default function Home() {
     }
   }, [category, filtersSelected, freeOnly, paidOnly, publicKey]);
 
+  // Загрузка промптов с оптимизацией
+  useEffect(() => {
+    fetchPrompts();
+  }, [fetchPrompts]);
+
   // Дебаунсированный поиск
   const debouncedFetch = useMemo(
     () => debounce(fetchPrompts, 300),
     [fetchPrompts]
   );
+
+  // Дебаунсированная загрузка при изменении фильтров
+  useEffect(() => {
+    debouncedFetch();
+  }, [debouncedFetch, category, filtersSelected, freeOnly, paidOnly]);
 
   // Мемоизированная фильтрация по поиску
   const filteredPrompts = useMemo(() => {
