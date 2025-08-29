@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
@@ -73,6 +73,8 @@ export default function Home() {
   }
 
   const [prompts, setPrompts] = useState([])
+  const [allPrompts, setAllPrompts] = useState([]) // Все промпты загружаем один раз
+  const [loading, setLoading] = useState(true) // Индикатор загрузки
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [priceSol, setPriceSol] = useState('0')
@@ -244,48 +246,71 @@ export default function Home() {
     return isPurchasedByViewer(prompt)
   }
 
+  // Загружаем ВСЕ промпты только один раз
   useEffect(() => {
-    // Сбрасываем на первую страницу при изменении фильтров
-    setCurrentPage(1)
+    const loadAllPrompts = async () => {
+      setLoading(true);
+      try {
+        const headers = publicKey ? { 'x-viewer': publicKey.toBase58() } : {};
+        const response = await fetch('/api/prompts', { headers });
+        if (response.ok) {
+          const data = await response.json();
+          setAllPrompts(data); // Сохраняем ВСЕ промпты
+        }
+      } catch (error) {
+        console.error('Error loading prompts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
     
-    const params = []
-    if (category) params.push(`category=${category}`)
-    if (filtersSelected.length) params.push(`filters=${filtersSelected.join(',')}`)
-    
-    const priceParams = []
-    if (freeOnly) priceParams.push('free')
-    if (paidOnly) priceParams.push('paid')
-    if (priceParams.length) params.push(`price=${priceParams.join(',')}`)
-    
-    const queryString = params.length ? `?${params.join('&')}` : ''
-    
-    fetch(`/api/prompts${queryString}`, { headers: { 'x-viewer': publicKey ? publicKey.toBase58() : '' }}).then(r => r.json()).then(list => {
-      const base = Array.isArray(list) ? list : []
-      // Shuffle prompts when no category is selected (main page)
-      const finalPrompts = !category ? shuffle(base) : base
-      setPrompts(finalPrompts)
-    })
-  }, [category, filtersSelected, freeOnly, paidOnly, publicKey])
+    loadAllPrompts();
+  }, [publicKey]); // Только при смене кошелька
 
-  // Client-side filtering by search term
-  const filteredPrompts = prompts.filter(prompt => {
-    if (!search.trim()) return true
-    const searchLower = search.toLowerCase()
-    return (
-      prompt.title?.toLowerCase().includes(searchLower) ||
-      prompt.content?.toLowerCase().includes(searchLower) ||
-      prompt.author?.toLowerCase().includes(searchLower) ||
-      (Array.isArray(prompt.filters) && prompt.filters.some(filter => 
-        filter.toLowerCase().includes(searchLower)
-      ))
-    )
-  })
+  // Сброс на первую страницу при изменении фильтров
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [category, filtersSelected, freeOnly, paidOnly, search]);
+
+  // Мгновенная фильтрация на клиенте - без API запросов!
+  const filteredPrompts = useMemo(() => {
+    return allPrompts.filter(prompt => {
+      // Фильтр по категории
+      const matchesCategory = !category || category === 'all' || prompt.category === category;
+      
+      // Фильтр по поиску
+      const matchesSearch = !search.trim() || (
+        prompt.title?.toLowerCase().includes(search.toLowerCase()) ||
+        prompt.content?.toLowerCase().includes(search.toLowerCase()) ||
+        prompt.author?.toLowerCase().includes(search.toLowerCase()) ||
+        (Array.isArray(prompt.filters) && prompt.filters.some(filter => 
+          filter.toLowerCase().includes(search.toLowerCase())
+        ))
+      );
+      
+      // Фильтр по выбранным фильтрам
+      const matchesFilters = filtersSelected.length === 0 || 
+        filtersSelected.some(filter => prompt.filters?.includes(filter));
+      
+      // Фильтр по цене
+      const matchesPrice = (!freeOnly && !paidOnly) || 
+        (freeOnly && prompt.priceSol === 0) ||
+        (paidOnly && prompt.priceSol > 0);
+      
+      return matchesCategory && matchesSearch && matchesFilters && matchesPrice;
+    });
+  }, [allPrompts, category, search, filtersSelected, freeOnly, paidOnly]);
+
+  // Применяем шафл только для главной страницы
+  const shuffledPrompts = useMemo(() => {
+    return !category ? shuffle([...filteredPrompts]) : filteredPrompts;
+  }, [filteredPrompts, category]);
 
   // Pagination logic
-  const totalPages = Math.ceil(filteredPrompts.length / ITEMS_PER_PAGE)
+  const totalPages = Math.ceil(shuffledPrompts.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
   const endIndex = startIndex + ITEMS_PER_PAGE
-  const currentPrompts = filteredPrompts.slice(startIndex, endIndex)
+  const currentPrompts = shuffledPrompts.slice(startIndex, endIndex)
 
   async function createPrompt(e) {
     e.preventDefault()
@@ -726,22 +751,28 @@ export default function Home() {
             </div>
           )}
         </div>
-        {filteredPrompts.length === 0 && prompts.length > 0 && search.trim() && (
+        {shuffledPrompts.length === 0 && allPrompts.length > 0 && search.trim() && (
           <div style={{textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)'}}>
             <p style={{fontSize: '1.2rem'}}>No prompts found for "{search}"</p>
             <p>Try different search terms or clear the search</p>
           </div>
         )}
         
-        {filteredPrompts.length === 0 && prompts.length === 0 && (
+        {shuffledPrompts.length === 0 && allPrompts.length === 0 && !loading && (
           <div style={{textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)'}}>
             <p style={{fontSize: '1.2rem'}}>No prompts found.</p>
             <p>Try adjusting your filters or create the first prompt!</p>
           </div>
         )}
         
+        {loading && (
+          <div style={{textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)'}}>
+            <p style={{fontSize: '1.2rem'}}>Loading prompts...</p>
+          </div>
+        )}
+        
         {/* Main grid or My sections */}
-        {!showMy && (
+        {!showMy && !loading && (
           <div className="prompt-grid">
             {currentPrompts.map(p => {
             const viewer = publicKey ? publicKey.toBase58() : ''
