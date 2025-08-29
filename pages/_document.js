@@ -4,10 +4,13 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Favicon - ваша оранжевая иконка */}
-        <link rel="icon" type="image/png" href="/icons/favicon.png" />
+        {/* Favicon - разные размеры для лучшего качества */}
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon.png" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/icons/favicon.png" />
         <link rel="shortcut icon" href="/icons/favicon.png" />
-        <link rel="apple-touch-icon" href="/icons/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/favicon.png" />
         
         {/* Meta теги для лучшего SEO */}
         <meta name="theme-color" content="#ff8c00" />
