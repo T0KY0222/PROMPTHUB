@@ -80,6 +80,8 @@ export default function Home() {
   const category = router.query.category || ''
   const [filtersSelected, setFiltersSelected] = useState([])
   const [search, setSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const ITEMS_PER_PAGE = 10
   const [showFilters, setShowFilters] = useState(false)
   const [freeOnly, setFreeOnly] = useState(false)
   const [paidOnly, setPaidOnly] = useState(false)
@@ -243,6 +245,9 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // Сбрасываем на первую страницу при изменении фильтров
+    setCurrentPage(1)
+    
     const params = []
     if (category) params.push(`category=${category}`)
     if (filtersSelected.length) params.push(`filters=${filtersSelected.join(',')}`)
@@ -275,6 +280,12 @@ export default function Home() {
       ))
     )
   })
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredPrompts.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const currentPrompts = filteredPrompts.slice(startIndex, endIndex)
 
   async function createPrompt(e) {
     e.preventDefault()
@@ -521,31 +532,35 @@ export default function Home() {
             className="search"
             placeholder="Search prompts..." 
             value={search} 
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              setSearch(e.target.value);
+              setCurrentPage(1); // Сброс на первую страницу при поиске
+            }}
             style={{flex:'1 1 auto'}}
           />
           {/* My Prompts button now lives in the sidebar under Create Prompt */}
         </div>
-        <div className="filters-dropdown" ref={filtersDropdownRef}>
-          <button onClick={() => setShowFilters(!showFilters)}>
-            <span>Filters</span>
-            {(filtersSelected.length > 0 || freeOnly || paidOnly) && 
-              <span style={{
-                marginLeft: '8px', 
-                background: 'var(--primary)', 
-                color: 'var(--bg)', 
-                borderRadius: '50%', 
-                width: '20px', 
-                height: '20px', 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                fontSize: '12px'
-              }}>
-                {filtersSelected.length + (freeOnly ? 1 : 0) + (paidOnly ? 1 : 0)}
-              </span>
-            }
-          </button>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px'}}>
+          <div className="filters-dropdown" ref={filtersDropdownRef}>
+            <button onClick={() => setShowFilters(!showFilters)}>
+              <span>Filters</span>
+              {(filtersSelected.length > 0 || freeOnly || paidOnly) && 
+                <span style={{
+                  marginLeft: '8px', 
+                  background: 'var(--primary)', 
+                  color: 'var(--bg)', 
+                  borderRadius: '50%', 
+                  width: '20px', 
+                  height: '20px', 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  fontSize: '12px'
+                }}>
+                  {filtersSelected.length + (freeOnly ? 1 : 0) + (paidOnly ? 1 : 0)}
+                </span>
+              }
+            </button>
           
           {showFilters && (
             <div className="filters-content">
@@ -638,6 +653,78 @@ export default function Home() {
               )}
             </div>
           )}
+          </div>
+          
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+              <button 
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                style={{
+                  padding: '8px 12px',
+                  border: '1px solid var(--border)',
+                  borderRadius: '6px',
+                  background: currentPage === 1 ? 'var(--bg-secondary)' : 'var(--bg)',
+                  color: currentPage === 1 ? 'var(--text-muted)' : 'var(--text)',
+                  cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                ←
+              </button>
+              
+              {[...Array(totalPages)].map((_, i) => {
+                const page = i + 1;
+                const isVisible = 
+                  page === 1 || 
+                  page === totalPages || 
+                  (page >= currentPage - 2 && page <= currentPage + 2);
+                
+                if (!isVisible) {
+                  if (page === currentPage - 3 || page === currentPage + 3) {
+                    return <span key={page} style={{color: 'var(--text-muted)'}}>...</span>;
+                  }
+                  return null;
+                }
+                
+                return (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    style={{
+                      padding: '8px 12px',
+                      border: '1px solid var(--border)',
+                      borderRadius: '6px',
+                      background: currentPage === page ? 'var(--primary)' : 'var(--bg)',
+                      color: currentPage === page ? 'var(--bg)' : 'var(--text)',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      minWidth: '36px'
+                    }}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+              
+              <button 
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: '8px 12px',
+                  border: '1px solid var(--border)',
+                  borderRadius: '6px',
+                  background: currentPage === totalPages ? 'var(--bg-secondary)' : 'var(--bg)',
+                  color: currentPage === totalPages ? 'var(--text-muted)' : 'var(--text)',
+                  cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                →
+              </button>
+            </div>
+          )}
         </div>
         {filteredPrompts.length === 0 && prompts.length > 0 && search.trim() && (
           <div style={{textAlign: 'center', padding: '60px 20px', color: 'var(--text-muted)'}}>
@@ -656,7 +743,7 @@ export default function Home() {
         {/* Main grid or My sections */}
         {!showMy && (
           <div className="prompt-grid">
-            {filteredPrompts.map(p => {
+            {currentPrompts.map(p => {
             const viewer = publicKey ? publicKey.toBase58() : ''
             const isBuyer = viewer && (p.owner === viewer || (Array.isArray(p.buyers) && p.buyers.includes(viewer)))
             const isPurchased = viewer && p.owner !== viewer && (purchasedLocal.has(p.id) || (Array.isArray(p.buyers) && p.buyers.includes(viewer)))
