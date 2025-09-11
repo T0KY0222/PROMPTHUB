@@ -512,8 +512,9 @@ export default function Home() {
 
     try {
       const web3 = await import('@solana/web3.js')
-      // Use Mainnet connection - matches WalletProviders.js
-      const connection = new web3.Connection('https://api.mainnet-beta.solana.com')
+      // Use your own QuickNode RPC for reliable connection
+      const rpcUrl = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'
+      const connection = new web3.Connection(rpcUrl, 'confirmed')
       
       let recipient
       try {
