@@ -540,7 +540,7 @@ export default function Home() {
         </div>
         <div className="header-wallet">
           <div className="social-links">
-            <a href="#" className="social-link" title="X (Twitter)">
+            <a href="https://x.com/hub_prompt" className="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
               <img src="/icons/x-logo.svg" alt="X" className="social-icon" />
             </a>
             <a href="#" className="social-link" title="DexScreener">
