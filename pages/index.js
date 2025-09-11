@@ -100,6 +100,7 @@ export default function Home() {
   const [notifications, setNotifications] = useState([])
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
   const [salesNotifications, setSalesNotifications] = useState([])
+  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false)
 
   // Load real sales notifications
   useEffect(() => {
@@ -120,12 +121,29 @@ export default function Home() {
       })
       if (response.ok) {
         const notifications = await response.json()
-        // Convert time strings back to Date objects
+        // Get read notifications from localStorage
+        let readNotificationIds = []
+        try {
+          const viewer = publicKey ? publicKey.toBase58() : 'local'
+          const stored = localStorage.getItem(`readNotifications:${viewer}`)
+          if (stored) {
+            readNotificationIds = JSON.parse(stored)
+          }
+        } catch (error) {
+          console.error('Error loading read status:', error)
+        }
+
+        // Convert time strings back to Date objects and update read status
         const processedNotifications = notifications.map(notification => ({
           ...notification,
-          time: new Date(notification.time)
+          time: new Date(notification.time),
+          read: readNotificationIds.includes(notification.id)
         }))
         setSalesNotifications(processedNotifications)
+        
+        // Check if there are any unread notifications
+        const unreadCount = processedNotifications.filter(n => !n.read).length
+        setHasUnreadNotifications(unreadCount > 0)
       }
     } catch (error) {
       console.error('Error loading notifications:', error)
@@ -434,10 +452,40 @@ export default function Home() {
     }, 3000)
   }
 
+  // Function to mark notifications as read
+  function markNotificationsAsRead() {
+    if (salesNotifications.length > 0 && hasUnreadNotifications) {
+      const updatedNotifications = salesNotifications.map(notification => ({
+        ...notification,
+        read: true
+      }))
+      setSalesNotifications(updatedNotifications)
+      setHasUnreadNotifications(false)
+      
+      // Save read status to localStorage
+      try {
+        const viewer = publicKey ? publicKey.toBase58() : 'local'
+        const readNotifications = updatedNotifications.map(n => n.id)
+        localStorage.setItem(`readNotifications:${viewer}`, JSON.stringify(readNotifications))
+      } catch (error) {
+        console.error('Error saving read status:', error)
+      }
+    }
+  }
+
+  // Toggle notification dropdown and mark as read when opened
+  function toggleNotificationDropdown() {
+    if (!showNotificationDropdown) {
+      // Opening dropdown - mark notifications as read
+      markNotificationsAsRead()
+    }
+    setShowNotificationDropdown(!showNotificationDropdown)
+  }
+
   // Close notification dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
-      if (showNotificationDropdown && !event.target.closest('.notification-bell')) {
+      if (showNotificationDropdown && !event.target.closest('.notification-bell-container')) {
         setShowNotificationDropdown(false)
       }
     }
@@ -633,17 +681,17 @@ export default function Home() {
           </div>
           
           {/* Notification bell button */}
-          <div style={{ position: 'relative' }}>
+          <div className="notification-bell-container">
             <button 
-              className={`notification-bell ${salesNotifications.some(n => !n.read) ? 'has-unread' : ''}`}
-              onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
+              className={`notification-bell ${hasUnreadNotifications ? 'has-unread' : ''}`}
+              onClick={toggleNotificationDropdown}
               title="Sales Notifications"
             >
               🔔
-              {salesNotifications.some(n => !n.read) && (
-                <div className="notification-dot"></div>
-              )}
             </button>
+            {hasUnreadNotifications && (
+              <div className="notification-badge"></div>
+            )}
             
             {/* Notification dropdown menu */}
             {showNotificationDropdown && (
