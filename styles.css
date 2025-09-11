@@ -384,7 +384,21 @@ body { font-family: Inter, Arial, sans-serif; margin: 0; padding: 0; background:
 
 /* Modal styles for create prompt */
 .modal-overlay { position:fixed; inset:0; background: rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1000 }
-.modal { background: var(--surface); color: var(--text); padding:18px; border-radius:10px; width:880px; max-width:96%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid var(--border); overflow-y:auto; overflow-x:hidden; }
+.modal { 
+  background: var(--surface); 
+  color: var(--text); 
+  padding:18px; 
+  border-radius:10px; 
+  width:880px; 
+  max-width:96%; 
+  max-height: 90vh; /* Ограничиваем высоту модального окна */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
+  border: 1px solid var(--border); 
+  overflow-y:auto; 
+  overflow-x:hidden; 
+  display: flex;
+  flex-direction: column;
+}
 .modal input, .modal textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px; box-sizing: border-box; }
 .modal textarea { min-height:120px }
 .modal .meta { color: var(--muted); }
@@ -464,7 +478,39 @@ button:disabled { opacity: .6; cursor: not-allowed; box-shadow: none !important;
 }
 
 /* Prevent long strings from overflowing the modal */
-.modal pre { white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; max-width: 100%; }
+.modal pre { 
+  white-space: pre-wrap; 
+  word-break: break-word; 
+  overflow-wrap: anywhere; 
+  max-width: 100%; 
+  max-height: 60vh; /* Ограничиваем высоту содержимого промпта */
+  overflow-y: auto; /* Добавляем прокрутку */
+  padding: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 12px 0;
+  /* Стилизуем скроллбар */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--surface);
+}
+
+/* Стилизация скроллбара для WebKit браузеров */
+.modal pre::-webkit-scrollbar {
+  width: 8px;
+}
+.modal pre::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 4px;
+}
+.modal pre::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+.modal pre::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
 .modal textarea,
 .modal input,
 .modal label,
