@@ -95,6 +95,64 @@ export default function Home() {
   const [purchaseMessage, setPurchaseMessage] = useState('')
   const [newModel, setNewModel] = useState(category || '')
   const [newTags, setNewTags] = useState([]) // tags chosen from available filters
+  
+  // Уведомления
+  const [notifications, setNotifications] = useState([])
+  const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
+  const [salesNotifications, setSalesNotifications] = useState([])
+
+  // Загружаем реальные уведомления о продажах
+  useEffect(() => {
+    if (publicKey) {
+      fetchSalesNotifications()
+    } else {
+      setSalesNotifications([])
+    }
+  }, [publicKey])
+
+  // Функция для загрузки уведомлений о продажах
+  async function fetchSalesNotifications() {
+    try {
+      const response = await fetch('/api/notifications/sales', {
+        headers: {
+          'x-owner': publicKey.toBase58()
+        }
+      })
+      if (response.ok) {
+        const notifications = await response.json()
+        // Преобразуем строки времени обратно в Date объекты
+        const processedNotifications = notifications.map(notification => ({
+          ...notification,
+          time: new Date(notification.time)
+        }))
+        setSalesNotifications(processedNotifications)
+      }
+    } catch (error) {
+      console.error('Ошибка загрузки уведомлений:', error)
+      setSalesNotifications([])
+    }
+  }
+
+  // Функция для форматирования времени уведомлений
+  function formatNotificationTime(time) {
+    const now = new Date()
+    const diffMs = now - time
+    const diffMinutes = Math.floor(diffMs / (1000 * 60))
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+
+    if (diffMinutes < 1) {
+      return 'Только что'
+    } else if (diffMinutes < 60) {
+      return `${diffMinutes} мин назад`
+    } else if (diffHours < 24) {
+      return `${diffHours} ч назад`
+    } else if (diffDays < 7) {
+      return `${diffDays} дн назад`
+    } else {
+      return time.toLocaleDateString('ru-RU')
+    }
+  }
   const [favorites, setFavorites] = useState(new Set()) // Set of prompt IDs
   const [purchasedLocal, setPurchasedLocal] = useState(new Set()) // locally persisted purchases per viewer
   const filtersDropdownRef = useRef(null) // Reference to filters dropdown
@@ -358,9 +416,35 @@ export default function Home() {
     if (!activePrompt) return
     try {
       await navigator.clipboard.writeText(activePrompt.content || '')
-      // optional: could add a toast later
-    } catch {}
+      showNotification('✅ Промпт скопирован в буфер обмена!', 'success')
+    } catch (error) {
+      showNotification('❌ Ошибка при копировании', 'error')
+    }
   }
+
+  // Функция для показа уведомлений
+  function showNotification(message, type = 'success') {
+    const id = Date.now()
+    const notification = { id, message, type }
+    setNotifications(prev => [...prev, notification])
+    
+    // Автоматически убираем уведомление через 3 секунды
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id))
+    }, 3000)
+  }
+
+  // Закрытие выпадающего меню уведомлений при клике вне его
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (showNotificationDropdown && !event.target.closest('.notification-bell')) {
+        setShowNotificationDropdown(false)
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showNotificationDropdown])
 
   async function buyActivePrompt() {
     if (!activePrompt) return
@@ -547,6 +631,46 @@ export default function Home() {
               <img src="/icons/dex-screener-seeklogo.svg" alt="DexScreener" className="social-icon" />
             </a>
           </div>
+          
+          {/* Кнопка уведомлений с колокольчиком */}
+          <div style={{ position: 'relative' }}>
+            <button 
+              className={`notification-bell ${salesNotifications.some(n => !n.read) ? 'has-unread' : ''}`}
+              onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
+              title="Уведомления о продажах"
+            >
+              🔔
+              {salesNotifications.some(n => !n.read) && (
+                <div className="notification-dot"></div>
+              )}
+            </button>
+            
+            {/* Выпадающее меню уведомлений */}
+            {showNotificationDropdown && (
+              <div className="notification-dropdown show">
+                <h3>Уведомления о продажах</h3>
+                {salesNotifications.length > 0 ? (
+                  salesNotifications.map(notification => (
+                    <div 
+                      key={notification.id} 
+                      className={`notification-item ${!notification.read ? 'unread' : ''}`}
+                    >
+                      <div className="notification-item-title">{notification.title}</div>
+                      <div className="notification-item-text">{notification.text}</div>
+                      <div className="notification-item-time">
+                        {formatNotificationTime(notification.time)}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="notification-empty">
+                    Пока нет уведомлений о продажах
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          
           <WalletMultiButton />
         </div>
       </div>
@@ -1126,6 +1250,17 @@ export default function Home() {
               )
             })()}
           </div>
+        </div>
+      )}
+
+      {/* Контейнер для уведомлений в правом верхнем углу */}
+      {notifications.length > 0 && (
+        <div className="notifications-container">
+          {notifications.map(notification => (
+            <div key={notification.id} className={`notification ${notification.type}`}>
+              <span className="notification-message">{notification.message}</span>
+            </div>
+          ))}
         </div>
       )}
 
