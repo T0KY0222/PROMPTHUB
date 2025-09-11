@@ -7,8 +7,8 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 
 export default function WalletProviders({ children }) {
-  const network = WalletAdapterNetwork.Devnet
-  const endpoint = 'https://api.devnet.solana.com'
+  const network = WalletAdapterNetwork.Mainnet
+  const endpoint = 'https://api.mainnet-beta.solana.com'
   const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network })]
 
   return (
