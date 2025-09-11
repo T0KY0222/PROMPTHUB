@@ -1,0 +1,13 @@
+{
+  "domain": "hub-prompt.com",
+  "dapp": "PromptHub Marketplace",
+  "description": "AI prompts marketplace for GPT, Claude, Copilot and more",
+  "verified": true,
+  "network": "mainnet-beta",
+  "version": "1.0.0",
+  "security": {
+    "singleSigner": true,
+    "optimizedTransactions": true,
+    "noMultipleSigners": true
+  }
+}

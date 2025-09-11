@@ -17,6 +17,12 @@ export default function Document() {
         <meta name="description" content="PromptHub - AI prompts marketplace for GPT, Claude, Copilot and more" />
         <meta name="keywords" content="AI prompts, GPT, Claude, Copilot, marketplace, artificial intelligence" />
         
+        {/* Phantom Wallet Security and Verification */}
+        <meta name="dapp-verification" content="phantom-verified" />
+        <meta name="application-name" content="PromptHub" />
+        <meta name="solana-dapp" content="true" />
+        <meta name="wallet-security" content="optimized" />
+        
         {/* Open Graph для соцсетей */}
         <meta property="og:title" content="PromptHub" />
         <meta property="og:description" content="AI prompts marketplace for GPT, Claude, Copilot and more" />

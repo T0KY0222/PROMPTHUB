@@ -512,7 +512,9 @@ export default function Home() {
 
     try {
       const web3 = await import('@solana/web3.js')
-      const connection = new web3.Connection(web3.clusterApiUrl('devnet'))
+      // Use Mainnet connection - matches WalletProviders.js
+      const connection = new web3.Connection('https://api.mainnet-beta.solana.com')
+      
       let recipient
       try {
         recipient = new web3.PublicKey(activePrompt.owner)
@@ -521,11 +523,29 @@ export default function Home() {
         setPurchaseMessage('Invalid seller address')
         return
       }
+      
       const lamports = Math.round(activePrompt.priceSol * 1e9)
-      const tx = new web3.Transaction().add(
-        web3.SystemProgram.transfer({ fromPubkey: publicKey, toPubkey: recipient, lamports })
+      
+      // Optimize transaction for Phantom - single signer, minimal size
+      const tx = new web3.Transaction()
+      tx.add(
+        web3.SystemProgram.transfer({ 
+          fromPubkey: publicKey, 
+          toPubkey: recipient, 
+          lamports 
+        })
       )
-      const signature = await sendTransaction(tx, connection)
+      
+      // Get recent blockhash for transaction
+      const { blockhash } = await connection.getLatestBlockhash('finalized')
+      tx.recentBlockhash = blockhash
+      tx.feePayer = publicKey
+      
+      // Send optimized transaction
+      const signature = await sendTransaction(tx, connection, {
+        skipPreflight: false,
+        preflightCommitment: 'processed'
+      })
 
       const viewer = publicKey.toBase58()
       

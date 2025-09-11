@@ -16,7 +16,8 @@ export default async function handler(req, res) {
   if (!prompt) return res.status(404).json({ error: 'Prompt not found' })
 
   try {
-    const connection = new Connection(clusterApiUrl('devnet'))
+    // Use Mainnet connection - consistent with frontend
+    const connection = new Connection('https://api.mainnet-beta.solana.com')
     const tx = await connection.getTransaction(signature, { commitment: 'confirmed' })
     if (!tx) return res.status(202).json({ status: 'pending', error: 'Transaction not found or not confirmed yet' })
 
