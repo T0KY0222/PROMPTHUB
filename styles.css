@@ -825,12 +825,12 @@ button, .tab, .filters-dropdown > button { color: var(--text); }
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--muted);
-  font-size: 18px;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .notification-bell:hover {
@@ -842,17 +842,24 @@ button, .tab, .filters-dropdown > button { color: var(--text); }
   color: var(--text);
 }
 
-/* Red dot for unread notifications */
+.notification-bell svg {
+  width: 20px;
+  height: 20px;
+  color: inherit;
+}
+
+/* Red dot for unread notifications - positioned on the bell icon */
 .notification-badge {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: 6px;
+  right: 6px;
   width: 8px;
   height: 8px;
   background: #ff4444;
   border-radius: 50%;
-  border: 2px solid var(--surface);
+  border: 1px solid var(--bg);
   animation: pulse 2s infinite;
+  z-index: 1;
 }
 
 @keyframes pulse {
