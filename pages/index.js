@@ -513,8 +513,10 @@ export default function Home() {
     try {
       const web3 = await import('@solana/web3.js')
       // Use your own QuickNode RPC for reliable connection
-      const rpcUrl = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'
-      const connection = new web3.Connection(rpcUrl, 'confirmed')
+      const connection = new web3.Connection(
+        'https://dark-hardworking-bridge.solana-mainnet.quiknode.pro/326d9a4feaccfa1d9283e196753ea9727a4432f0',
+        'confirmed'
+      )
       
       let recipient
       try {
@@ -696,8 +698,8 @@ export default function Home() {
             <a href="https://x.com/hub_prompt" className="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
               <img src="/icons/x-logo.svg" alt="X" className="social-icon" />
             </a>
-            <a href="#" className="social-link" title="DexScreener">
-              <img src="/icons/dex-screener-seeklogo.svg" alt="DexScreener" className="social-icon" />
+            <a href="https://pump.fun" className="social-link" title="Pump.fun" target="_blank" rel="noopener noreferrer">
+              <img src="/icons/Pump_fun_logo.png" alt="Pump.fun" className="social-icon" />
             </a>
           </div>
           

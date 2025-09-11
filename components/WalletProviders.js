@@ -8,7 +8,7 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adap
 
 export default function WalletProviders({ children }) {
   const network = WalletAdapterNetwork.Mainnet
-  const endpoint = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com'
+  const endpoint = 'https://dark-hardworking-bridge.solana-mainnet.quiknode.pro/326d9a4feaccfa1d9283e196753ea9727a4432f0'
   const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter({ network })]
 
   return (
