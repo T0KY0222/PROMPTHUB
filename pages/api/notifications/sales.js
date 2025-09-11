@@ -1,4 +1,4 @@
-import prisma from '../../../../lib/prisma'
+import prisma from '../../../lib/prisma'
 
 export default async function handler(req, res) {
   try {
@@ -33,8 +33,8 @@ export default async function handler(req, res) {
             
             notifications.push({
               id: notificationId++,
-              title: "🎉 Промпт продан!",
-              text: `Ваш промпт "${prompt.title.substring(0, 30)}${prompt.title.length > 30 ? '...' : ''}" куплен за ${prompt.priceSol} SOL`,
+              title: "🎉 Prompt Sold!",
+              text: `Your prompt "${prompt.title.substring(0, 30)}${prompt.title.length > 30 ? '...' : ''}" was purchased for ${prompt.priceSol} SOL`,
               time: saleTime,
               read: false,
               promptId: prompt.id,

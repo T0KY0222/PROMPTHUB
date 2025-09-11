@@ -96,12 +96,12 @@ export default function Home() {
   const [newModel, setNewModel] = useState(category || '')
   const [newTags, setNewTags] = useState([]) // tags chosen from available filters
   
-  // Уведомления
+  // Notifications
   const [notifications, setNotifications] = useState([])
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
   const [salesNotifications, setSalesNotifications] = useState([])
 
-  // Загружаем реальные уведомления о продажах
+  // Load real sales notifications
   useEffect(() => {
     if (publicKey) {
       fetchSalesNotifications()
@@ -110,7 +110,7 @@ export default function Home() {
     }
   }, [publicKey])
 
-  // Функция для загрузки уведомлений о продажах
+  // Function to load sales notifications
   async function fetchSalesNotifications() {
     try {
       const response = await fetch('/api/notifications/sales', {
@@ -120,7 +120,7 @@ export default function Home() {
       })
       if (response.ok) {
         const notifications = await response.json()
-        // Преобразуем строки времени обратно в Date объекты
+        // Convert time strings back to Date objects
         const processedNotifications = notifications.map(notification => ({
           ...notification,
           time: new Date(notification.time)
@@ -128,12 +128,12 @@ export default function Home() {
         setSalesNotifications(processedNotifications)
       }
     } catch (error) {
-      console.error('Ошибка загрузки уведомлений:', error)
+      console.error('Error loading notifications:', error)
       setSalesNotifications([])
     }
   }
 
-  // Функция для форматирования времени уведомлений
+  // Function to format notification time
   function formatNotificationTime(time) {
     const now = new Date()
     const diffMs = now - time
@@ -142,15 +142,15 @@ export default function Home() {
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
 
     if (diffMinutes < 1) {
-      return 'Только что'
+      return 'Just now'
     } else if (diffMinutes < 60) {
-      return `${diffMinutes} мин назад`
+      return `${diffMinutes}m ago`
     } else if (diffHours < 24) {
-      return `${diffHours} ч назад`
+      return `${diffHours}h ago`
     } else if (diffDays < 7) {
-      return `${diffDays} дн назад`
+      return `${diffDays}d ago`
     } else {
-      return time.toLocaleDateString('ru-RU')
+      return time.toLocaleDateString('en-US')
     }
   }
   const [favorites, setFavorites] = useState(new Set()) // Set of prompt IDs
@@ -416,25 +416,25 @@ export default function Home() {
     if (!activePrompt) return
     try {
       await navigator.clipboard.writeText(activePrompt.content || '')
-      showNotification('✅ Промпт скопирован в буфер обмена!', 'success')
+      showNotification('✅ Prompt copied to clipboard!', 'success')
     } catch (error) {
-      showNotification('❌ Ошибка при копировании', 'error')
+      showNotification('❌ Error copying prompt', 'error')
     }
   }
 
-  // Функция для показа уведомлений
+  // Function to show notifications
   function showNotification(message, type = 'success') {
     const id = Date.now()
     const notification = { id, message, type }
     setNotifications(prev => [...prev, notification])
     
-    // Автоматически убираем уведомление через 3 секунды
+    // Auto-remove notification after 3 seconds
     setTimeout(() => {
       setNotifications(prev => prev.filter(n => n.id !== id))
     }, 3000)
   }
 
-  // Закрытие выпадающего меню уведомлений при клике вне его
+  // Close notification dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (showNotificationDropdown && !event.target.closest('.notification-bell')) {
@@ -632,12 +632,12 @@ export default function Home() {
             </a>
           </div>
           
-          {/* Кнопка уведомлений с колокольчиком */}
+          {/* Notification bell button */}
           <div style={{ position: 'relative' }}>
             <button 
               className={`notification-bell ${salesNotifications.some(n => !n.read) ? 'has-unread' : ''}`}
               onClick={() => setShowNotificationDropdown(!showNotificationDropdown)}
-              title="Уведомления о продажах"
+              title="Sales Notifications"
             >
               🔔
               {salesNotifications.some(n => !n.read) && (
@@ -645,10 +645,10 @@ export default function Home() {
               )}
             </button>
             
-            {/* Выпадающее меню уведомлений */}
+            {/* Notification dropdown menu */}
             {showNotificationDropdown && (
               <div className="notification-dropdown show">
-                <h3>Уведомления о продажах</h3>
+                <h3>Sales Notifications</h3>
                 {salesNotifications.length > 0 ? (
                   salesNotifications.map(notification => (
                     <div 
@@ -664,7 +664,7 @@ export default function Home() {
                   ))
                 ) : (
                   <div className="notification-empty">
-                    Пока нет уведомлений о продажах
+                    No sales notifications yet
                   </div>
                 )}
               </div>
@@ -1253,7 +1253,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Контейнер для уведомлений в правом верхнем углу */}
+      {/* Toast notifications container in top-right corner */}
       {notifications.length > 0 && (
         <div className="notifications-container">
           {notifications.map(notification => (
