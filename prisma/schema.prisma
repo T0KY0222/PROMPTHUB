@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -18,6 +18,12 @@ model Prompt {
   buyers    String[] @default([])
   filters   String[] @default([])
   createdAt DateTime @default(now())
+
+  @@index([category], map: "idx_prompt_category")
+  @@index([createdAt(sort: Desc)], map: "idx_prompt_created_at")
+  @@index([filters], map: "idx_prompt_filters", type: Gin)
+  @@index([owner], map: "idx_prompt_owner")
+  @@index([priceSol], map: "idx_prompt_price_sol")
 }
 
 model TransactionRecord {

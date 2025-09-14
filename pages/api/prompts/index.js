@@ -118,9 +118,13 @@ export default async function handler(req, res) {
   res.status(405).end('Method not allowed')
   } catch (error) {
     console.error('API Error:', error);
+    console.error('Database URL exists:', !!process.env.DATABASE_URL);
+    console.error('Direct URL exists:', !!process.env.DIRECT_URL);
+    
     res.status(500).json({ 
       error: 'Internal server error',
-      details: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
+      details: process.env.NODE_ENV === 'development' ? error.message : 'Database connection failed',
+      timestamp: new Date().toISOString()
     });
   }
 }
