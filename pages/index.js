@@ -96,6 +96,9 @@ export default function Home() {
   const [newModel, setNewModel] = useState(category || '')
   const [newTags, setNewTags] = useState([]) // tags chosen from available filters
   
+  // Ref to prevent multiple prompts loading
+  const promptsLoadedRef = useRef(false)
+  
   // Notifications
   const [notifications, setNotifications] = useState([])
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false)
@@ -325,23 +328,42 @@ export default function Home() {
   // Загружаем ВСЕ промпты только один раз
   useEffect(() => {
     const loadAllPrompts = async () => {
+      // Предотвращаем множественные загрузки
+      if (promptsLoadedRef.current) {
+        console.log('🚫 Предотвращена повторная загрузка промптов');
+        return;
+      }
+      
+      console.log('🔄 Загружаем промпты...');
       setLoading(true);
+      promptsLoadedRef.current = true;
+      
       try {
         const headers = publicKey ? { 'x-viewer': publicKey.toBase58() } : {};
         const response = await fetch('/api/prompts', { headers });
         if (response.ok) {
           const data = await response.json();
           setAllPrompts(data); // Сохраняем ВСЕ промпты
+          console.log('✅ Промпты загружены:', data.length);
         }
       } catch (error) {
         console.error('Error loading prompts:', error);
+        promptsLoadedRef.current = false; // Сбрасываем флаг при ошибке
       } finally {
         setLoading(false);
       }
     };
     
     loadAllPrompts();
-  }, [publicKey]); // Только при смене кошелька
+  }, []); // Убираем publicKey из зависимостей - загружаем только один раз
+
+  // Обновляем статус покупок при смене кошелька без перезагрузки всех промптов
+  useEffect(() => {
+    if (allPrompts.length > 0 && publicKey) {
+      // Здесь можно добавить логику для обновления статуса покупок
+      // без полной перезагрузки промптов
+    }
+  }, [publicKey, allPrompts.length]); // Только обновляем статус покупок
 
   // Сброс на первую страницу при изменении фильтров
   useEffect(() => {
@@ -690,7 +712,7 @@ export default function Home() {
         <div className="header">
           <h1 style={{margin: 0}}>Prompt Marketplace</h1>
           <p style={{color: 'var(--text-secondary)', fontSize: '1.1rem', margin: 0}}>
-            Discover and share AI prompts
+            Raise your use of AI
           </p>
         </div>
         <div className="header-wallet">
@@ -711,7 +733,8 @@ export default function Home() {
               title="Sales Notifications"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C13.1 2 14 2.9 14 4C14 4.74 13.6 5.39 13 5.73V7C13 10.5 16 11.66 16 15V16H8V15C8 11.66 11 10.5 11 7V5.73C10.4 5.39 10 4.74 10 4C10 2.9 10.9 2 12 2ZM21 19V20H3V19L5 17V11.5C5 7.5 7.91 4.1 11.5 4.02C11.66 4.01 11.83 4 12 4C12.17 4 12.34 4.01 12.5 4.02C16.09 4.1 19 7.5 19 11.5V17L21 19ZM14 21C14 22.1 13.1 23 12 23S10 22.1 10 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               {hasUnreadNotifications && (
                 <div className="notification-badge"></div>
@@ -743,8 +766,6 @@ export default function Home() {
               </div>
             )}
           </div>
-          
-          <WalletMultiButton />
         </div>
       </div>
 
@@ -1283,12 +1304,12 @@ export default function Home() {
               {activePrompt.title}
             </h2>
             <div className="meta" style={{marginBottom:'10px', display:'flex', alignItems:'center', gap:12}}>
-    By {activePrompt.author || 'Anonymous'} · {activePrompt.priceSol > 0 ? (
+    By {activePrompt.author || 'Anonymous'}{activePrompt.priceSol > 0 ? (
                 <>
-                  <span className="amount">{activePrompt.priceSol}</span>
+                   · <span className="amount">{activePrompt.priceSol}</span>
           <img className="sol-inline" src="/icons/solana.svg" alt="Solana" />
                 </>
-      ) : <span className="free-label">Free</span>}
+      ) : ''}
               <span style={{flex:1}} />
               {/* like removed */}
             </div>
@@ -1300,16 +1321,23 @@ export default function Home() {
                   {!canAccess && (
                     <p style={{color:'var(--muted)', marginTop:'8px'}}>This is a paid prompt. Buy to reveal content.</p>
                   )}
-                  <div className="button-group" style={{marginTop:'14px', display:'flex', gap:'8px', justifyContent:'flex-end'}}>
-                    {!canAccess && activePrompt.priceSol > 0 && (
-                      <button onClick={buyActivePrompt} disabled={purchaseStatus === 'pending' || !publicKey}>
-                        {publicKey ? (purchaseStatus === 'pending' ? 'Processing...' : `Buy for ${activePrompt.priceSol} SOL`) : 'Connect wallet to buy'}
-                      </button>
-                    )}
-                    {canAccess && (
-                      <button onClick={copyPrompt}>Copy</button>
-                    )}
-                    <button className="button-secondary" onClick={closePrompt}>Close</button>
+                  <div className="button-group" style={{marginTop:'14px', display:'flex', gap:'8px', justifyContent:'space-between', alignItems:'center'}}>
+                    <div style={{display:'flex', alignItems:'center'}}>
+                      {activePrompt.priceSol === 0 && (
+                        <span className="free-label">Free</span>
+                      )}
+                    </div>
+                    <div style={{display:'flex', gap:'8px'}}>
+                      {!canAccess && activePrompt.priceSol > 0 && (
+                        <button onClick={buyActivePrompt} disabled={purchaseStatus === 'pending' || !publicKey}>
+                          {publicKey ? (purchaseStatus === 'pending' ? 'Processing...' : `Buy for ${activePrompt.priceSol} SOL`) : 'Connect wallet to buy'}
+                        </button>
+                      )}
+                      {canAccess && (
+                        <button onClick={copyPrompt}>Copy</button>
+                      )}
+                      <button className="button-secondary" onClick={closePrompt}>Close</button>
+                    </div>
                   </div>
                   {purchaseStatus !== 'idle' && (
                     <div className={`status ${purchaseStatus}`} style={{marginTop:'8px', padding:'8px', borderRadius:'6px', backgroundColor: purchaseStatus === 'success' ? '#22c55e20' : purchaseStatus === 'error' ? '#ef444420' : '#3b82f620', border: purchaseStatus === 'success' ? '1px solid #22c55e40' : purchaseStatus === 'error' ? '1px solid #ef444440' : '1px solid #3b82f640'}}>

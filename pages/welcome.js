@@ -41,9 +41,9 @@ export default function Welcome() {
       }}>
         <h1 style={{marginTop:0, marginBottom:12, display:'flex', alignItems:'center', gap:12}}>
           <span style={{fontWeight:700}}>Welcome to</span>
-          <img src="/icons/promptLOGO.png" alt="PromptHub" style={{height:72}} onError={(e)=>{ e.currentTarget.src='/icons/prompthublogo.png' }} />
+          <img src="/icons/Logopromptraise.png" alt="Prompt Raise" style={{height:72}} onError={(e)=>{ e.currentTarget.src='/icons/prompthublogo.png' }} />
         </h1>
-        <p style={{color:'var(--muted)', fontSize:'1.05rem', marginTop:0}}>A marketplace to discover, create, and sell AI prompts.</p>
+        <p style={{color:'var(--muted)', fontSize:'1.05rem', marginTop:0}}>Raise your use of AI.</p>
 
         <div style={{marginTop:16, background:'var(--surface-2)', border:'1px solid var(--border)', borderRadius:12, padding:16}}>
           <ul style={{margin:'8px 0 0 18px', padding:0, lineHeight:1.6}}>
