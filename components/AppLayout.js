@@ -12,7 +12,7 @@ const WalletMultiButton = dynamic(
 export default function AppLayout({ children }) {
   const router = useRouter()
   const { publicKey } = useWallet()
-  const contractAddress = process.env.NEXT_PUBLIC_CA || 'TBD'
+  const contractAddress = process.env.NEXT_PUBLIC_CA || '74A9VXUmybmbMbj8YyUs3VRSih48poB7CbzSjEEKpump'
 
   const isActive = (path) => {
     if (path === '/') {

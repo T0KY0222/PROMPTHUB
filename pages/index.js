@@ -720,7 +720,7 @@ export default function Home() {
             <a href="https://x.com/Amdangerousone" className="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
               <img src="/icons/x-logo.svg" alt="X" className="social-icon" />
             </a>
-            <a href="https://pump.fun/coin/BG6Kq1yg1gR4jYsFmFBcoc1M3KTGPv2P24FM8AoWpump" className="social-link" title="Pump.fun Token" target="_blank" rel="noopener noreferrer">
+            <a href="https://pump.fun/coin/74A9VXUmybmbMbj8YyUs3VRSih48poB7CbzSjEEKpump" className="social-link" title="Pump.fun Token" target="_blank" rel="noopener noreferrer">
               <img src="/icons/Pump_fun_logo.png" alt="Pump.fun" className="social-icon" />
             </a>
           </div>
