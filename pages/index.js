@@ -717,7 +717,7 @@ export default function Home() {
         </div>
         <div className="header-wallet">
           <div className="social-links">
-            <a href="https://x.com/saksonchain" className="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/Amdangerousone" className="social-link" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
               <img src="/icons/x-logo.svg" alt="X" className="social-icon" />
             </a>
             <a href="https://pump.fun/coin/BG6Kq1yg1gR4jYsFmFBcoc1M3KTGPv2P24FM8AoWpump" className="social-link" title="Pump.fun Token" target="_blank" rel="noopener noreferrer">

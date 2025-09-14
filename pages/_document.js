@@ -14,26 +14,28 @@ export default function Document() {
         
         {/* Meta теги для лучшего SEO */}
         <meta name="theme-color" content="#ff8c00" />
-        <meta name="description" content="PromptHub - AI prompts marketplace for GPT, Claude, Copilot and more" />
+  {/* Updated branding */}
+  <meta name="description" content="Prompt Raise - AI prompts marketplace for GPT, Claude, Copilot, Cursor, Grok, DeepSeek and more" />
         <meta name="keywords" content="AI prompts, GPT, Claude, Copilot, marketplace, artificial intelligence" />
         
         {/* Phantom Wallet Security and Verification */}
         <meta name="dapp-verification" content="phantom-verified" />
-        <meta name="application-name" content="PromptHub" />
+  <meta name="application-name" content="Prompt Raise" />
         <meta name="solana-dapp" content="true" />
         <meta name="wallet-security" content="optimized" />
         
         {/* Open Graph для соцсетей */}
-        <meta property="og:title" content="PromptHub" />
-        <meta property="og:description" content="AI prompts marketplace for GPT, Claude, Copilot and more" />
-        <meta property="og:image" content="/icons/favicon.png" />
+  <meta property="og:title" content="Prompt Raise" />
+  <meta property="og:description" content="AI prompts marketplace for GPT, Claude, Copilot, Cursor, Grok, DeepSeek and more" />
+  <meta property="og:image" content="/icons/Logopromptraise.png" />
+  <meta property="og:site_name" content="Prompt Raise" />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="PromptHub" />
-        <meta name="twitter:description" content="AI prompts marketplace" />
-        <meta name="twitter:image" content="/icons/favicon.png" />
+  <meta name="twitter:title" content="Prompt Raise" />
+  <meta name="twitter:description" content="AI prompts marketplace" />
+  <meta name="twitter:image" content="/icons/Logopromptraise.png" />
       </Head>
       <body>
         <Main />

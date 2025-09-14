@@ -12,6 +12,7 @@ const WalletMultiButton = dynamic(
 export default function AppLayout({ children }) {
   const router = useRouter()
   const { publicKey } = useWallet()
+  const contractAddress = process.env.NEXT_PUBLIC_CA || 'TBD'
 
   const isActive = (path) => {
     if (path === '/') {
@@ -33,19 +34,37 @@ export default function AppLayout({ children }) {
       {/* New Horizontal Top Navigation */}
       <header className="top-navigation">
         <div className="nav-left">
-          <button 
+          <button
             className="brand-link"
             onClick={() => router.push('/?reset=1')}
+            title="Go Home"
           >
-            <img 
-              src="/icons/Logopromptraise.png" 
+            <img
+              src="/icons/Logopromptraise.png"
               alt="Prompt Raise" 
-              className="logo" 
-              onError={(e) => {
-                e.currentTarget.src = '/icons/prompthublogo.png'
-              }} 
+              className="logo"
+              onError={(e) => { e.currentTarget.src = '/icons/prompthublogo.png' }}
             />
           </button>
+          <div 
+            className="ca-wrapper" 
+            onClick={() => {
+              if (contractAddress === 'TBD') return
+              navigator.clipboard.writeText(contractAddress).then(()=>{
+                const el = document.querySelector('.ca-status-msg')
+                if (el) {
+                  el.textContent = 'Copied!'
+                  setTimeout(()=>{ el.textContent = '' }, 1500)
+                }
+              })
+            }}
+          >
+            <span className="ca-label">CA:</span>{' '}
+            <span className="ca-value" title="Click to copy contract address">
+              {contractAddress === 'TBD' ? '—' : contractAddress.slice(0,4)+"..."+contractAddress.slice(-4)}
+            </span>
+            <span className="ca-status-msg" style={{marginLeft:8,fontSize:12}}></span>
+          </div>
         </div>
 
         <div className="nav-center">
